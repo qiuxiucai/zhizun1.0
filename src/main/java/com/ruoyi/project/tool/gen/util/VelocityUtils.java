@@ -170,9 +170,9 @@ public class VelocityUtils
         {
             fileName = StringUtils.format("{}/add.html", htmlPath);
         }
-        else if (template.contains("edit.html.vm"))
+        else if (template.contains("detail.html.vm"))
         {
-            fileName = StringUtils.format("{}/edit.html", htmlPath);
+            fileName = StringUtils.format("{}/detail.html", htmlPath);
         }
         else if (template.contains("sql.vm"))
         {
