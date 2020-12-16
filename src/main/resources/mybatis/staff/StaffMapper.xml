@@ -27,6 +27,16 @@
         <result property="deptName" column="dep_name"/>
     </resultMap>
 
+    <resultMap id="depResult" type="com.ruoyi.project.staff.message.domain.Dep">
+        <id property="deptId" column="dept_id"/>
+        <result property="deptName" column="dep_name"/>
+    </resultMap>
+
+    <resultMap id="jobResult" type="com.ruoyi.project.staff.message.domain.StaffJob">
+        <id property="jId" column="j_id"/>
+        <result property="JName" column="j_name"/>
+    </resultMap>
+
     <sql id="selectStaffResult">
         select s_id,
                s_job_num,
@@ -50,9 +60,15 @@
                staff.s_status,
                dep.dep_name,
                job.j_name
-        from t_staff staff join t_dep dep on
-            staff.dep_id = dep.dept_id
-        join t_job job on job.j_id = staff.j_id
+        from t_staff staff
+                     join t_dep dep on
+                staff.dep_id = dep.dept_id
+                     join t_job job on job.j_id = staff.j_id
+    </sql>
+
+    <sql id="selectDepResult">
+        select dept_id, dep_name
+        from t_dep
     </sql>
 
     <select id="selectStaffList" resultMap="staffVOResult" parameterType="staff">
@@ -60,7 +76,7 @@
         </include>
         <where>
             <if test="sStatus != null and sStatus != ''">
-                and s_status = #{sStatus}
+                AND s_status = #{sStatus}
             </if>
             <if test="depId != null and depId != ''">
                 and dep_id = #{depId}
@@ -69,11 +85,96 @@
                 and s_job_num = #{sJobNum}
             </if>
             <if test="sName != null and sName != ''">
-                and s_name = #{sName}
-            </if>
-            <if test="sId != null and sId != ''">
-                and s_id = #{sId}
+                and s_name like concat ('%',#{sName},'%')
             </if>
         </where>
+    </select>
+
+    <select id="getDeps" resultMap="depResult">
+        <include refid="selectDepResult">
+        </include>
+    </select>
+
+    <insert id="addStaff" parameterType="staff">
+        insert into t_staff(
+        <if test="sJobNum != null and sJobNum != 0">
+            s_job_num,
+        </if>
+        <if test="sName != null and sName != ''">
+            s_name,
+        </if>
+        <if test="jId != null and jId != ''">
+            j_id,
+        </if>
+        <if test="sPhone != null and sPhone != ''">
+            s_phone,
+        </if>
+        <if test="depId != null and depId != ''">
+            dep_id,
+        </if>
+        s_date
+        )values(
+        <if test="sJobNum != null and sJobNum != 0">
+            #{sJobNum},
+        </if>
+        <if test="sName != null and sName != ''">
+            #{sName},
+        </if>
+        <if test="jId != null and jId != ''">
+            #{jId},
+        </if>
+        <if test="sPhone != null and sPhone != ''">
+            #{sPhone},
+        </if>
+        <if test="depId != null and depId != ''">
+            #{depId},
+        </if>
+        sysdate()
+        )
+    </insert>
+
+    <select id="getJobs" resultMap="jobResult">
+        select j_id, j_name
+        from t_job
+    </select>
+
+    <select id="checkSJobNumUnique" resultType="Long">
+        select count(0)
+        from t_staff
+        where s_job_num = #{sJobNum}
+    </select>
+
+    <select id="selectStaffByJobNum" resultMap="staffResult">
+        <include refid="selectStaffResult">
+        </include>
+        where s_job_num = #{sJobNum}
+    </select>
+
+    <update id="editStaff" parameterType="staff">
+        update t_staff
+        <set>
+            <if test="sJobNum != null and sJobNum != 0">
+                s_job_num = #{sJobNum},
+            </if>
+            <if test="sName != null and sName != ''">
+                s_name = #{sName},
+            </if>
+            <if test="jId != null and jId != ''">
+                j_id = #{jId},
+            </if>
+            <if test="sPhone != null and sPhone != ''">
+                s_phone = #{sPhone},
+            </if>
+            <if test="depId != null and depId != ''">
+                dep_id = #{depId},
+            </if>
+        </set>
+        where s_id = #{sId}
+    </update>
+
+    <select id="getStaffByDepId" resultMap="staffResult">
+        <include refid="selectStaffResult">
+        </include>
+        where dep_id = #{depId}
     </select>
 </mapper>
