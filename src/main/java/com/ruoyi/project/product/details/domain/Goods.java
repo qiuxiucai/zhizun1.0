@@ -33,6 +33,6 @@ public class Goods extends BaseEntity {
     private Long productTotalPrice;
     //产品状态
     private String productStatus;
-    //产品备注
+    //添加产品备注
     private String productRemark;
 }
