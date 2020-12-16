@@ -118,4 +118,3 @@ Icon
 ## hack for graddle wrapper
 !wrapper/*.jar
 !**/wrapper/*.jar
-/src/main/java/com/ruoyi/project/cms/
