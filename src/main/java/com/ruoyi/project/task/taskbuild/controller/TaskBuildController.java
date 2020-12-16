@@ -43,7 +43,7 @@ public class TaskBuildController extends BaseController {
     @PostMapping("/list")
     @RequiresPermissions("task:build:list")
     public TableDataInfo list(Task task){
-
+        System.out.println("task = " + task);
         startPage();
         List<Task> tasks = iTaskBuildService.selectTaskList(task);
         return getDataTable(tasks);
