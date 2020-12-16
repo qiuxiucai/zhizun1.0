@@ -7,6 +7,7 @@
 
 # web application files
 .idea/workspace.xml
+src/main/java/com/ruoyi/test.java
 #/web-app/WEB-INF
 
 # IDE support files
