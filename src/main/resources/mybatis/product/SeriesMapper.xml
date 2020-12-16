@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.product.series.mapper.SeriesMapper">
+
+    <resultMap type="com.ruoyi.project.product.series.domain.Series" id="SeriesResult">
+        <result property="seriesName"    column="series_name"    />
+        <result property="createBy"       column="create_by"       />
+        <result property="createTime"     column="create_time"     />
+        <result property="updateBy"       column="update_by"       />
+        <result property="updateTime"     column="update_time"     />
+        <result property="remark"         column="series_remark"          />
+    </resultMap>
+    
+    <sql id="selectSeriesVo">
+        select series_name,series_remark
+		from p_series
+    </sql>
+
+
+    <select id="selectSeriesAll" resultMap="SeriesResult">
+        <include refid="selectSeriesVo">
+        </include>
+    </select>
+
+    <select id="selectSeries" resultMap="SeriesResult">
+        <include refid="selectSeriesVo"/>
+
+        <if test="seriesName !=null and seriesName != ''">
+            where series_name like concat('%',#{seriesName},'%')
+        </if>
+
+    </select>
+
+    <insert id="saveSeries">
+    </insert>
+
+<!--    <select id="selectSeriesBySeriesName" resultMap="SeriesResult">-->
+<!--        <include refid="selectSeriesVo">-->
+<!--            where series_name = #{seriesName}-->
+<!--        </include>-->
+
+<!--    </select>-->
+</mapper>
