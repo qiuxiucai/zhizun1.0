@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('销售列表')" />
+    <th:block th:include="include :: header('订单列表')" />
 </head>
 <body class="gray-bg">
 <div class="container-div">
@@ -11,35 +11,18 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            岗位编码：<input type="text" name="postCode"/>
-                        </li>
-                        <li>
-                            岗位名称：<input type="text" name="postName"/>
+                            订单编号：<input type="text" name="pnum"/>
                         </li>
 
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
                         </li>
                     </ul>
                 </div>
             </form>
         </div>
 
-        <div class="btn-group-sm" id="toolbar" role="group">
 
-            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:post:add">
-                <i class="fa fa-list"></i> 订单分类
-            </a>
-
-            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:post:add">
-                <i class="fa fa-plus"></i> 新建订单
-            </a>
-            <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:post:edit">
-                <i class="fa fa-edit"></i> 订单维护
-            </a>
-
-        </div>
 
         <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-table"></table>
@@ -48,10 +31,10 @@
 </div>
 <th:block th:include="include :: footer" />
 <script th:inline="javascript">
-    var editFlag = [[${@permission.hasPermi('system:post:edit')}]];
+    var editFlag = [[${@permission.hasPermi('market:post:edit')}]];
     var removeFlag = [[${@permission.hasPermi('system:post:remove')}]];
     var datas = [[${@dict.getType('sys_normal_disable')}]];
-    var prefix = ctx + "system/post";
+    var prefix = ctx + "market/indent";
 
     $(function() {
         var options = {
@@ -60,43 +43,42 @@
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
             exportUrl: prefix + "/export",
-            sortName: "postSort",
-            modalName: "岗位",
+
+            modalName: "订单信息",
             columns: [{
                 checkbox: true
             },
                 {
-                    field: 'postId',
-                    title: '岗位编号'
+                    field: 'pnum',
+                    title: '订单编号',
+
                 },
                 {
-                    field: 'postCode',
-                    title: '岗位编码',
+                    field: 'ptitle',
+                    title: '项目名称',
                     sortable: true
                 },
                 {
-                    field: 'postName',
-                    title: '岗位名称',
+                    field: 'ccompany',
+                    title: '客户信息',
                     sortable: true
                 },
                 {
-                    field: 'postSort',
-                    title: '显示顺序',
+                    field: 'ptotal',
+                    title: '项目总额',
                     sortable: true
                 },
                 {
-                    field: 'status',
-                    title: '状态',
-                    align: 'center',
-                    formatter: function(value, row, index) {
-                        return $.table.selectDictLabel(datas, value);
-                    }
+                    field: 'sname',
+                    title: '销售人员',
+                    sortable: true
                 },
                 {
-                    field: 'createTime',
+                    field: 'pstart',
                     title: '创建时间',
                     sortable: true
                 },
+
                 {
                     title: '操作',
                     align: 'center',
