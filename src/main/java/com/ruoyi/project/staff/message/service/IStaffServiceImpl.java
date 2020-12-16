@@ -62,9 +62,18 @@ public class IStaffServiceImpl implements IStaffService {
     }
 
     @Override
-    public String checkSJobNumUnique(Staff staff) {
+    public AjaxResult removeStaff(Long[] sJobNums) {
+        int i = staffMapper.removeStaff(sJobNums);
+        if (i == sJobNums.length){
+            return AjaxResult.success("成功删除" + i + "条数据");
+        }
+        return AjaxResult.error("删除失败");
+    }
 
-        return String.valueOf(staffMapper.checkSJobNumUnique(staff));
+    @Override
+    public Integer checkSJobNumUnique(Staff staff) {
+
+        return staffMapper.checkSJobNumUnique(staff);
     }
 
     @Override

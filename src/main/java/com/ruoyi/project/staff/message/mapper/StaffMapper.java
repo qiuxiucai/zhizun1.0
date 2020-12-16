@@ -1,5 +1,6 @@
 package com.ruoyi.project.staff.message.mapper;
 
+import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.project.staff.message.domain.Dep;
 import com.ruoyi.project.staff.message.domain.Staff;
 import com.ruoyi.project.staff.message.domain.StaffJob;
@@ -24,4 +25,6 @@ public interface StaffMapper {
     int editStaff(Staff staff);
 
     List<Staff> getStaffByDepId(Long depId);
+
+    int removeStaff(Long[] sJobNums);
 }

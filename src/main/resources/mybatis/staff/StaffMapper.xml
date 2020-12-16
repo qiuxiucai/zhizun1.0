@@ -75,7 +75,7 @@
         <include refid="selectStaffVOResult">
         </include>
         <where>
-            <if test="sStatus != null and sStatus != ''">
+            <if test="sStatus != null and sStatus != '' || sStatus == 0">
                 AND s_status = #{sStatus}
             </if>
             <if test="depId != null and depId != ''">
@@ -97,7 +97,7 @@
 
     <insert id="addStaff" parameterType="staff">
         insert into t_staff(
-        <if test="sJobNum != null and sJobNum != 0">
+        <if test="sJobNum != null and sJobNum != ''">
             s_job_num,
         </if>
         <if test="sName != null and sName != ''">
@@ -138,7 +138,7 @@
         from t_job
     </select>
 
-    <select id="checkSJobNumUnique" resultType="Long">
+    <select id="checkSJobNumUnique" resultType="int">
         select count(0)
         from t_staff
         where s_job_num = #{sJobNum}
@@ -168,6 +168,9 @@
             <if test="depId != null and depId != ''">
                 dep_id = #{depId},
             </if>
+            <if test="sStatus != null and sStatus != '' || sStatus == 0">
+                s_status = #{sStatus}
+            </if>
         </set>
         where s_id = #{sId}
     </update>
@@ -177,4 +180,11 @@
         </include>
         where dep_id = #{depId}
     </select>
+
+    <delete id="removeStaff" parameterType="staff">
+        delete from t_staff where s_job_num in
+            <foreach collection="array" item="sJobNum" open="(" separator="," close=")">
+                #{sJobNum}
+            </foreach>
+    </delete>
 </mapper>
