@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('项目详情')"/>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped" th:object="${itemVO}">
+                            <!--                            项目信息-->
+                            <h4>订单详细</h4>
+                            <thead>
+                            <tr>
+                                <th>
+                                    项目名称
+                                </th>
+                                <th>
+                                    订单编号
+                                </th>
+                                <th>
+                                    项目负责人
+                                </th>
+                                <th>
+                                    项目总金额
+                                </th>
+                                <th>
+                                    项目周期
+                                </th>
+                                <th>
+                                    订单类别
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>[[*{pTitle}]]</td>
+                                <td>[[*{pNum}]]</td>
+                                <td>[[*{sName}]]</td>
+                                <td>[[*{pTotal}]]</td>
+                                <td>[[*{pPeriod}]]</td>
+                                <td>[[*{dName}]]</td>
+                            </tr>
+                            </tbody>
+                            <!--                            客户信息-->
+
+                            <thead>
+                            <tr>
+                                <th>
+                                    客户信息
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    客户编号
+                                </th>
+                                <th>
+                                    客户名称
+                                </th>
+                                <th>
+                                    客户类型
+                                </th>
+                                <th>
+                                    客户公司名称
+                                </th>
+                                <th>
+                                    联系方式
+                                </th>
+                                <th>
+                                    客户备注信息
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>[[*{cId}]]</td>
+                                <td>[[*{cName}]]</td>
+                                <td>[[*{cType}]]</td>
+                                <td>[[*{cCompany}]]</td>
+                                <td>[[*{cPhone}]]</td>
+                                <td>[[*{cRemark}]]</td>
+                            </tr>
+                            </tbody>
+
+                            <!--                            项目详情-->
+                            <thead>
+                            <tr>
+                                <th>
+                                    订单形象-项目详情
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    项目内容
+                                </th>
+                                <th>
+                                    项目风格
+                                </th>
+                                <th>
+                                    项目类型
+                                </th>
+                                <th>
+                                    项目订立时间
+                                </th>
+                                <th>
+                                    项目完成时间
+                                </th>
+                                <th>
+                                    备注
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>[[*{pText}]]</td>
+                                <td>[[*{pStyle}]]</td>
+                                <td>[[*{pTypeName}]]</td>
+                                <td>[[*{pStart}]]</td>
+                                <td>[[*{pEnd}]]</td>
+                                <td>[[*{pRemark}]]</td>
+                            </tr>
+                            </tbody>
+
+                            <!--                            产品信息-->
+                            <thead>
+                            <tr>
+                                <th>
+                                    订单形象-项目详情
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    产品编号
+                                </th>
+                                <th>
+                                    产品名称
+                                </th>
+                                <th>
+                                    数量
+                                </th>
+                                <th>
+                                    单价
+                                </th>
+                                <th>
+                                    总额
+                                </th>
+                                <th>
+                                    备注
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>[[*{productModel}]]</td>
+                                <td>[[*{productName}]]</td>
+                                <td>[[*{productNum}]]</td>
+                                <td>[[*{productPrice}]]</td>
+                                <td>[[*{productNum}]]</td>
+                                <td>[[*{productRemark}]]</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
