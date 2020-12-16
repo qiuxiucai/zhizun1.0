@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.staff.message.mapper.StaffMapper">
+    <resultMap type="com.ruoyi.project.staff.message.domain.Staff" id="staffResult">
+        <id property="sId" column="s_id"/>
+        <result property="sJobNum" column="s_job_num"/>
+        <result property="sName" column="s_name"/>
+        <result property="jId" column="j_id"/>
+        <result property="sPhone" column="s_phone"/>
+        <result property="depId" column="dep_id"/>
+        <result property="sDate" column="s_date"/>
+        <result property="sStatus" column="s_status"/>
+    </resultMap>
+
+    <resultMap type="com.ruoyi.project.staff.message.domain.vo.StaffVO" id="staffVOResult">
+        <id property="sId" column="s_id"/>
+        <result property="sJobNum" column="s_job_num"/>
+        <result property="sName" column="s_name"/>
+        <result property="jId" column="j_id"/>
+        <result property="sPhone" column="s_phone"/>
+        <result property="depId" column="dep_id"/>
+        <result property="sDate" column="s_date"/>
+        <result property="sStatus" column="s_status"/>
+        <result property="jobName" column="j_name"/>
+        <result property="deptName" column="dep_name"/>
+    </resultMap>
+
+    <sql id="selectStaffResult">
+        select s_id,
+               s_job_num,
+               s_name,
+               j_id,
+               s_phone,
+               dep_id,
+               s_date,
+               s_status
+        from t_staff
+    </sql>
+
+    <sql id="selectStaffVOResult">
+        select staff.s_id,
+               staff.s_job_num,
+               staff.s_name,
+               staff.j_id,
+               staff.s_phone,
+               staff.dep_id,
+               staff.s_date,
+               staff.s_status,
+               dep.dep_name,
+               job.j_name
+        from t_staff staff join t_dep dep on
+            staff.dep_id = dep.dept_id
+        join t_job job on job.j_id = staff.j_id
+    </sql>
+
+    <select id="selectStaffList" resultMap="staffVOResult" parameterType="staff">
+        <include refid="selectStaffVOResult">
+        </include>
+        <where>
+            <if test="sStatus != null and sStatus != ''">
+                and s_status = #{sStatus}
+            </if>
+            <if test="depId != null and depId != ''">
+                and dep_id = #{depId}
+            </if>
+            <if test="sJobNum != null and sJobNum != ''">
+                and s_job_num = #{sJobNum}
+            </if>
+            <if test="sName != null and sName != ''">
+                and s_name = #{sName}
+            </if>
+            <if test="sId != null and sId != ''">
+                and s_id = #{sId}
+            </if>
+        </where>
+    </select>
+</mapper>
