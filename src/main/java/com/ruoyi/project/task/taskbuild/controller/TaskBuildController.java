@@ -27,7 +27,7 @@ import java.util.List;
 
 public class TaskBuildController extends BaseController {
 
-    private String prefix = "task/build";
+    private String prefix = "task/create";
 
     @Autowired
     private ITaskBuildService iTaskBuildService;
