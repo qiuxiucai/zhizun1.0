@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('订单分类')" />
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="post-form">
+                <div class="select-list">
+                    <ul>
+
+                        <li>
+                            类别名称:<select name="dName" th:with="types=${@indentType.selectIndent()}">
+                            <option value="">所有</option>
+                            <option th:each="type : ${types}" th:text="${type.dName}" th:value="${type.dName}"></option>
+                        </select>
+                        </li>
+
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table"></table>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('market:type:edit')}]];
+    var prefix = ctx + "market/type";
+
+    $(function() {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+
+            modalName: "项目分类",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'dname',
+                    title: '订单类别'
+
+                },
+                {
+                    field: 'dnum',
+                    title: '订单编号',
+                    sortable: true
+                },
+                {
+                    field: 'damount',
+                    title: '订单数量',
+                    sortable: true
+                },
+                {
+                    field: 'dremark',
+                    title: '订单备注',
+                    sortable: true
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        console.log('sadfsf')
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.dName + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        return actions.join('');
+                    }
+                }
+             ]
+        };
+        $.table.init(options);
+    });
+</script>
+</body>
+</html>

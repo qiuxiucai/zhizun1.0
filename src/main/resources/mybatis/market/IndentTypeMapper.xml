@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.market.type.mapper.IndentTypeMapper">
+
+    <resultMap type="com.ruoyi.project.market.indent.domain.Indent" id="IndentTypeResult">
+        <id     property="dId"     column="d_id"       />
+        <result property="dType"        column="d_type"     />
+        <result property="dName"  column="d_name"     />
+        <result property="dNum"   column="d_num"     />
+        <result property="dAmount"      column="d_amount"     />
+        <result property="dRemark"    column="d_remark"   />
+        <result property="gNum"      column="g_num"     />
+        <result property="cId"    column="c_id"   />
+    </resultMap>
+
+    <sql id="selectIndentAVo">
+        select d_id, d_type, d_name, d_num, d_amount, d_remark, g_num,c_id
+		from t_der
+    </sql>
+
+    <select id="selectIndentAll" resultMap="IndentTypeResult">
+        <include refid="selectIndentAVo"/>
+
+        <where>
+        <if test="dName != null and dName != ''">
+            d_name like concat('%', #{dName}, '%')
+        </if>
+        </where>
+
+    </select>
+
+    <select id="selectIndent" resultMap="IndentTypeResult">
+        <include refid="selectIndentAVo"/>
+    </select>
+</mapper>
