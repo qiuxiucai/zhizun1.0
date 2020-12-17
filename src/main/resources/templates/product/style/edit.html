@@ -5,20 +5,20 @@
 </head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form class="form-horizontal m" id="form-post-edit" th:object="${Series}">
-        <input id="seriesId" name="seriesId" type="hidden" th:field="*{seriesId}"/>
+    <form class="form-horizontal m" id="form-post-edit" th:object="${ProductStyle}">
+        <input id="styleId" name="styleId" type="hidden" th:field="*{styleId}"/>
         <div class="form-group">
-            <label class="col-sm-3 control-label">公告类型名称：</label>
+            <label class="col-sm-3 control-label">产品风格名称：</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" name="seriesName" id="seriesName" th:field="*{seriesName}" required>
+                <input class="form-control" type="text" name="styleName" id="styleName" th:field="*{styleName}" required>
             </div>
         </div>
 
 
         <div class="form-group">
-            <label class="col-sm-3 control-label">系列备注</label>
+            <label class="col-sm-3 control-label">产品风格备注</label>
             <div class="col-sm-8">
-                <textarea id="remark" name="remark" class="form-control">[[*{remark}]]</textarea>
+                <textarea id="styleRemark" name="styleRemark" class="form-control">[[*{styleRemark}]]</textarea>
             </div>
         </div>
     </form>
@@ -26,19 +26,19 @@
 <th:block th:include="include :: footer" />
 <script type="text/javascript">
 
-    var prefix = ctx + "product/series";
+    var prefix = ctx + "product/style";
 
     $("#form-post-edit").validate({
         onkeyup: false,
         rules:{
-            seriesName:{
+            styleName:{
                 remote: {
-                    url: ctx + "product/series/checkSeriesNameUnique",
+                    url: ctx + "product/style/checkProductStyleNameUnique",
                     type: "post",
                     dataType: "json",
                     data: {
-                        "seriesName" : function() {
-                            return $.common.trim($("#seriesName").val());
+                        "styleName" : function() {
+                            return $.common.trim($("#styleName").val());
                         }
                     },
                     dataFilter: function(data, type) {
@@ -49,8 +49,8 @@
 
         },
         messages: {
-            "seriesName": {
-                remote: "系列名称已经存在"
+            "styleName": {
+                remote: "风格名称已经存在"
             }
         },
         focusCleanup: true
