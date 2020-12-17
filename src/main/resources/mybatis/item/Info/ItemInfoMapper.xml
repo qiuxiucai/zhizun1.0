@@ -68,6 +68,7 @@
         <result property="productRemark"        column="pro_remark"        />
         <result property="sName"        column="s_name"        />
         <result property="dName"        column="d_name"        />
+        <result property="dAmount"        column="d_amount"        />
     </resultMap>
 
     <sql id="selectItem">
