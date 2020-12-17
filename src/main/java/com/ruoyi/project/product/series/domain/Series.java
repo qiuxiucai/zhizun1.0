@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class Series extends BaseEntity {
 
-    private Integer seriesId;
+    private Long seriesId;
     private String seriesName;
     private String remark;
 

@@ -16,5 +16,14 @@ public interface SeriesMapper {
     int saveSeries(Series series);
 
     Series selectSeriesBySeriesName(String seriesName);
+
+    Series selectSeriesTypeById(Long seriesId);
+
+    int updateSeries(Series series);
+
+    int removeSeriesByIds(Long[] ids);
+
+
+
 }
 
