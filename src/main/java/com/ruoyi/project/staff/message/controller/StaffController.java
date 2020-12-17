@@ -4,11 +4,9 @@ import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.staff.message.domain.Staff;
-import com.ruoyi.project.staff.message.domain.StaffDetail;
 import com.ruoyi.project.staff.message.domain.vo.StaffVO;
 import com.ruoyi.project.staff.message.service.IStaffService;
 import com.ruoyi.project.system.post.domain.Post;
-import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -106,27 +104,18 @@ public class StaffController extends BaseController {
         return iStaffService.editStaff(staff);
     }
 
-    @RequestMapping("/remove")
-    @RequiresPermissions("staff:message:remove")
-    @ResponseBody
-    public AjaxResult removeStaff(Long[] ids){
-        return iStaffService.removeStaff(ids);
-    }
-
-    @RequestMapping("/detail/{sJobNum}")
-    public String staffDetail(@PathVariable("sJobNum") Integer sJobNum,Model model){
-        StaffDetail staff = iStaffService.selectStaffDetailByJobNum(sJobNum);
-        model.addAttribute("staff",staff);
-        return prefix + "/detail";
-    }
+    //TODO 这里写查看员工详细信息的菜单
+//    public String staffDetail(Integer sId){
+//
+//    }
 
     /**
      * 校验工号
      */
     @PostMapping("/checkSJobNumUnique")
     @ResponseBody
-    public Integer checkSJobNumUnique(Staff staff) {
-        Integer i = iStaffService.checkSJobNumUnique(staff);
-        return i;
+    public String checkPostNameUnique(Staff staff) {
+
+        return iStaffService.checkSJobNumUnique(staff);
     }
 }
