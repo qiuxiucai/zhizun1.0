@@ -52,12 +52,16 @@
             createUrl: prefix + "/add",
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
-            exportUrl: prefix + "/export",
+            // exportUrl: prefix + "/export",
             // sortName: "postSort",
-            modalName: "系列",
+            modalName: "产品系列",
             columns: [{
                 checkbox: true
             },
+                {
+                    field: 'seriesId',
+                    title: '系列ID'
+                },
                 {
                     field: 'seriesName',
                     title: '系列名称'

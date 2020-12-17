@@ -5,6 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruoyi.project.product.series.mapper.SeriesMapper">
 
     <resultMap type="com.ruoyi.project.product.series.domain.Series" id="SeriesResult">
+        <result property="seriesId"    column="productseries_id"    />
         <result property="seriesName"    column="series_name"    />
         <result property="createBy"       column="create_by"       />
         <result property="createTime"     column="create_time"     />
@@ -14,10 +15,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
     
     <sql id="selectSeriesVo">
-        select series_name,series_remark
+        select *
 		from p_series
     </sql>
-
 
     <select id="selectSeriesAll" resultMap="SeriesResult">
         <include refid="selectSeriesVo">
@@ -33,13 +33,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     </select>
 
+    <select id="selectSeriesBySeriesName" resultMap="SeriesResult">
+        <include refid="selectSeriesVo"/>
+        where series_name = #{seriesName}
+    </select>
+
     <insert id="saveSeries">
+        insert into p_series(
+        <if test="seriesName != null and seriesName != ''">series_name,</if>
+        <if test="remark != null and remark != ''">series_remark,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )values(
+        <if test="seriesName != null and seriesName != ''">#{seriesName},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
     </insert>
 
-<!--    <select id="selectSeriesBySeriesName" resultMap="SeriesResult">-->
-<!--        <include refid="selectSeriesVo">-->
-<!--            where series_name = #{seriesName}-->
-<!--        </include>-->
+    <select id="selectSeriesTypeById" resultMap="SeriesResult">
+        <include refid="selectSeriesVo"/>
+        where productseries_id = #{seriesId}
+    </select>
 
-<!--    </select>-->
+    <update id="updateSeries" parameterType="Series">
+
+        update p_series
+        <set>
+
+            <if test="seriesName != null and seriesName != ''">series_name = #{seriesName},</if>
+
+            <if test="remark != null  and remark != ''">series_remark = #{remark},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where productseries_id = #{seriesId}
+    </update>
+
+    <delete id="removeSeriesByIds">
+        delete from p_series where productseries_id in
+        <foreach collection="array" item="seriesId" open="(" separator="," close=")">
+            #{seriesId}
+        </foreach>
+    </delete>
+
 </mapper>

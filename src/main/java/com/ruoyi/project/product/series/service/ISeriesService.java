@@ -25,4 +25,10 @@ public interface ISeriesService {
      * @return
      */
     String checkSeriesNameUnique(String SeriesName);
+
+    Series selectSeriesTypeById(Long seriesId);
+
+    AjaxResult editSeriesType(Series series, String userName);
+
+    AjaxResult removeSeriesByIds(Long[] ids);
 }
