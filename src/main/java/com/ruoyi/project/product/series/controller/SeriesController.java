@@ -64,6 +64,33 @@ public class SeriesController extends BaseController {
     }
 
 
+    @GetMapping("/edit/{seriesId}")
+    public String edit(@PathVariable Long seriesId, Model model){
+        model.addAttribute("Series", iSeriesService.selectSeriesTypeById(seriesId));
+
+        return prefix + "/edit";
+
+    }
+
+
+    @RequiresPermissions("product:series:edit")
+    @PostMapping("/edit")
+    @ResponseBody
+    public AjaxResult edit(Series series){
+
+        User user = getSysUser();
+        return iSeriesService.editSeriesType(series,user.getUserName());
+    }
+
+    @RequiresPermissions("product:series:remove")
+    @PostMapping("/remove")
+    @ResponseBody
+    public AjaxResult remove(Long[] ids){
+
+        return iSeriesService.removeSeriesByIds(ids);
+    }
+
+
 
 
 

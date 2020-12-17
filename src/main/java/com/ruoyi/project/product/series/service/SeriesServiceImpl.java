@@ -46,4 +46,36 @@ public class SeriesServiceImpl implements ISeriesService{
         }
         return SeriesConstants.SERIESNAME_UNIQUE_NOT_EXISTS;
     }
+
+    @Override
+    public Series selectSeriesTypeById(Long seriesId) {
+        return seriesMapper.selectSeriesTypeById(seriesId);
+    }
+
+    @Override
+    public AjaxResult editSeriesType(Series series, String userName) {
+        series.setUpdateBy(userName);
+        int result = seriesMapper.updateSeries(series);
+        if(result == 1){
+            return AjaxResult.success("修改系列类别成功");
+        }
+        return AjaxResult.error("修改系列类别失败");
+    }
+
+    @Override
+    public AjaxResult removeSeriesByIds(Long[] ids) {
+
+//        for (Long id : ids) {
+//            Long num = seriesMapper.countProductDetails(ids);
+//            if(num > 0){
+//                return AjaxResult.error("该公告下有内容,不能删除");
+//            }
+//        }
+
+        int result = seriesMapper.removeSeriesByIds(ids);
+        if(result == ids.length){
+            return AjaxResult.success("删除产品系列类型成功");
+        }
+        return AjaxResult.error("删除产品系列类型失败");
+    }
 }
