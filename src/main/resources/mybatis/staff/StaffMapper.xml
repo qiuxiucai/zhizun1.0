@@ -183,8 +183,46 @@
 
     <delete id="removeStaff" parameterType="staff">
         delete from t_staff where s_job_num in
-            <foreach collection="array" item="sJobNum" open="(" separator="," close=")">
-                #{sJobNum}
-            </foreach>
+        <foreach collection="array" item="sJobNum" open="(" separator="," close=")">
+            #{sJobNum}
+        </foreach>
     </delete>
+
+    <resultMap id="staffDetailResult" type="com.ruoyi.project.staff.message.domain.StaffDetail">
+        <id column="d_id" property="dId"/>
+        <result column="d_sex" property="dSex"/>
+        <result column="d_birth" property="dBirth"/>
+        <result column="d_edu" property="dEdu"/>
+        <result column="d_major" property="dMajor"/>
+        <result column="d_year" property="dYear"/>
+        <result column="d_face" property="dFace"/>
+        <result column="d_email" property="dEmail"/>
+        <result column="d_address" property="dAddress"/>
+        <result column="d_place" property="dPlace"/>
+        <result column="d_avatar" property="dAvatar"/>
+        <result column="s_job_num" property="sJobNum"/>
+        <result column="s_phone" property="sPhone"/>
+        <result column="s_name" property="sName"/>
+    </resultMap>
+
+    <select id="selectStaffDetailByJobNum" resultMap="staffDetailResult" parameterType="int">
+        select t1.d_id,
+               t1.d_sex,
+               t1.d_birth,
+               t1.d_edu,
+               t1.d_major,
+               t1.d_year,
+               t1.d_face,
+               t1.d_place,
+               t1.d_email,
+               t1.d_address,
+               t1.d_avatar,
+               t1.s_job_num,
+               t2.s_name,
+               t2.s_phone
+        from t_staff_detail t1
+                     join t_staff t2 on
+                t1.s_job_num = t2.s_job_num
+        where t1.s_job_num = #{sJobNum}
+    </select>
 </mapper>

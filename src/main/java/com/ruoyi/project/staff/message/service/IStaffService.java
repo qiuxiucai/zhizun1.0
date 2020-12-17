@@ -3,6 +3,7 @@ package com.ruoyi.project.staff.message.service;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.project.staff.message.domain.Dep;
 import com.ruoyi.project.staff.message.domain.Staff;
+import com.ruoyi.project.staff.message.domain.StaffDetail;
 import com.ruoyi.project.staff.message.domain.StaffJob;
 import com.ruoyi.project.staff.message.domain.vo.StaffVO;
 
@@ -51,4 +52,6 @@ public interface IStaffService {
     List<Staff> getStaffByDepId(Long depId);
 
     AjaxResult removeStaff(Long[] sJobNums);
+
+    StaffDetail selectStaffDetailByJobNum(Integer sJobNum);
 }

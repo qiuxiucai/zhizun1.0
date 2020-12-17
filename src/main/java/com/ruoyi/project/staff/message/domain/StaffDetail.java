@@ -1,14 +1,17 @@
 package com.ruoyi.project.staff.message.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * @author wuxx
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class StaffDetail {
+public class StaffDetail extends Staff{
 
     /**
      * 细节主键
@@ -23,7 +26,8 @@ public class StaffDetail {
     /**
      * 生日
      */
-    private LocalDate dBirth;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date dBirth;
 
     /**
      * 学历

@@ -4,6 +4,7 @@ import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.staff.message.domain.Staff;
+import com.ruoyi.project.staff.message.domain.StaffDetail;
 import com.ruoyi.project.staff.message.domain.vo.StaffVO;
 import com.ruoyi.project.staff.message.service.IStaffService;
 import com.ruoyi.project.system.post.domain.Post;
@@ -114,8 +115,8 @@ public class StaffController extends BaseController {
 
     @RequestMapping("/detail/{sJobNum}")
     public String staffDetail(@PathVariable("sJobNum") Integer sJobNum,Model model){
-
-        model.addAttribute("hh","哈哈");
+        StaffDetail staff = iStaffService.selectStaffDetailByJobNum(sJobNum);
+        model.addAttribute("staff",staff);
         return prefix + "/detail";
     }
 
@@ -125,8 +126,7 @@ public class StaffController extends BaseController {
     @PostMapping("/checkSJobNumUnique")
     @ResponseBody
     public Integer checkSJobNumUnique(Staff staff) {
-        Integer integer = iStaffService.checkSJobNumUnique(staff);
-        System.out.println(integer);
-        return integer;
+        Integer i = iStaffService.checkSJobNumUnique(staff);
+        return i;
     }
 }
