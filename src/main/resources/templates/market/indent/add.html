@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增岗位')" />
+    <style>
+        table{
+            min-width: 100%;
+        }
+        td{
+            min-width: 100px;
+        }
+        .table-container{
+            overflow:auto;
+            display: block;
+        }
+    </style>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-post-add">
+        <table class="table table-bordered table-striped table-container "  >
+        <tbody>
+        <tr>
+            <th class="text-nowrap">项目名称:</th>
+            <td> <input style="width:100px;" type="text" name="pTitle" id="pTitle" required></td>
+        </tr>
+        <tr>
+            <th >订单编号</th>
+            <td> <input style="width:100px;" type="text" name="pNum" id="pNum" required></td>
+
+
+        </tr>
+        <tr>
+            <th >项目负责人</th>
+            <td > <input style="width:100px;" type="text" name="sName" id="sName" required></td>
+
+        </tr>
+        <tr>
+            <th>项目金额</th>
+            <td> <input style="width:100px;" type="text" name="pTotal" id="pTotal" required></td>
+
+
+        </tr>
+        <tr>
+            <th>项目周期</th>
+            <td> <input style="width:100px;" type="text" name="pPeriod" id="pPeriod" required></td>
+
+        </tr>
+        <tr>
+            <th>订单类别</th>
+            <td> <input style="width:100px;" type="text" name="cType" id="cType" required></td>
+
+        </tr>
+        </tbody>
+
+
+        <div class="form-group">
+            <tr>
+                <th>
+                    客户信息 (新增)
+                </th>
+            </tr>
+            <tr>
+                <th >
+                    客户编号
+                </th>
+                <th >
+                    客户名称
+                </th>
+                <th>
+                    客户类型
+                </th>
+                <th >
+                    客户公司名称
+                </th>
+                <th>
+                    联系方式
+                </th>
+                <th >
+                    客户备注信息
+                </th>
+           </tr>
+            <tr>
+                <td >
+                    <input  type="text" name="cId" id="cId" required>
+                </td>
+                <td>
+                    <input  type="text" name="cName" id="cName" required>
+                </td>
+                <td>
+                    <input  type="text" name="cType" id="cType" required>
+                </td>
+                <td>
+                    <input  type="text" name="cCompany" id="cCompany" required>
+                </td>
+                <td>
+                    <input  type="text" name="cPhone" id="cPhone" required>
+                </td>
+                <td>
+                    <input  type="text" name="cRemark" id="cRemark" required>
+                </td>
+            </tr>
+        </div>
+
+            <div class="form-group">
+                <tr>
+                    <th>
+                       项目详情 (新增)
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        项目内容
+                    </th>
+                    <th>
+                        项目风格
+                    </th>
+                    <th>
+                        项目类型
+                    </th>
+                    <th>
+                        项目订立时间
+                    </th>
+                    <th>
+                        项目完成时间
+                    </th>
+                    <th>
+                        备注
+                    </th>
+                </tr>
+                <tr>
+                    <td >
+                        <input  type="text" name="pText" id="pText" required>
+                    </td>
+                    <td>
+                        <input  type="text" name="pStyle" id="pStyle" required>
+                    </td>
+                    <td>
+                        <input  type="text" name="pTypeName" id="pTypeName" required>
+                    </td>
+                    <td>
+                        <input  type="text" name="pStart" id="pStart" required>
+                    </td>
+                    <td>
+                        <input  type="text" name="pEnd" id="pEnd" required>
+                    </td>
+                    <td>
+                        <input  type="text" name="pRemark" id="pRemark" required>
+                    </td>
+                </tr>
+            </div>
+
+            <div class="form-group">
+                <tr>
+                    <th>
+                        产品详情 (新增)
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        产品编号
+                    </th>
+                    <th>
+                        产品名称
+                    </th>
+                    <th>
+                        数量
+                    </th>
+                    <th>
+                        单价
+                    </th>
+                    <th>
+                        总额
+                    </th>
+                    <th>
+                        备注
+                    </th>
+                </tr>
+                <tr>
+                    <td >
+                        <input  type="text" name="productModel" id="productModel" required>
+                    </td>
+                    <td>
+                        <input  type="text" name="productName" id="productName" required>
+                    </td>
+                    <td>
+                        <input  type="text" name="productNum" id="productNum" required>
+                    </td>
+                    <td>
+                        <input  type="text" name="productPrice" id="productPrice" required>
+                    </td>
+                    <td>
+                        <input  type="text" name="productTotalPrice" id="productTotalPrice" required>
+                    </td>
+                    <td>
+                        <input  type="text" name="productRemark" id="productRemark" required>
+                    </td>
+                </tr>
+            </div>
+
+        </table>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<script type="text/javascript">
+    var prefix = ctx + "market/indent";
+
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/add", $('#form-post-add').serialize());
+        }
+    }
+</script>
+</body>
+</html>

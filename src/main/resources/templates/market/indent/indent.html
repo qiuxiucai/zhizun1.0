@@ -11,7 +11,7 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            订单编号：<input type="text" name="pnum"/>
+                            订单编号：<input type="text" name="pNum"/>
                         </li>
 
                         <li>
@@ -22,7 +22,11 @@
             </form>
         </div>
 
-
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="market:indent:add">
+                <i class="fa fa-plus"></i> 新增订单
+            </a>
+        </div>
 
         <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-table"></table>
@@ -31,18 +35,16 @@
 </div>
 <th:block th:include="include :: footer" />
 <script th:inline="javascript">
-    var editFlag = [[${@permission.hasPermi('market:post:edit')}]];
-    var removeFlag = [[${@permission.hasPermi('system:post:remove')}]];
+    var editFlag = [[${@permission.hasPermi('market:indent:add')}]];
     var datas = [[${@dict.getType('sys_normal_disable')}]];
+
     var prefix = ctx + "market/indent";
 
     $(function() {
         var options = {
             url: prefix + "/list",
             createUrl: prefix + "/add",
-            updateUrl: prefix + "/edit/{id}",
-            removeUrl: prefix + "/remove",
-            exportUrl: prefix + "/export",
+            detailUrl: prefix + "/detail/{id}",
 
             modalName: "订单信息",
             columns: [{
@@ -84,8 +86,7 @@
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.postId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.postId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        actions.push('<a class="btn btn-info btn-xs" href="#" onclick="$.operate.detail(\'' + row.pid + '\',1000,700)"><i class="fa fa-search"></i>详细</a> ');
                         return actions.join('');
                     }
                 }]

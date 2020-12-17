@@ -11,9 +11,16 @@ import java.util.List;
 public class IndentServiceImpl implements IIndentService {
     @Autowired
     private IndentMapper indentMapper;
+
     @Override
-    public List<IndentAllVO> selectAll(IndentAllVO indentAllVO) {
-        List<IndentAllVO> indentAllVOS=indentMapper.selectAll(indentAllVO);
-        return indentAllVOS;
+    public List<IndentAllVO> selectAll() {
+        return indentMapper.selectAll();
     }
+
+    @Override
+    public IndentAllVO selectByNum(Integer pid) {
+        return indentMapper.selectByNum(pid);
+    }
+
+
 }
