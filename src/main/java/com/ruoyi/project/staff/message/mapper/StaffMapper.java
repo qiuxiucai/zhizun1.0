@@ -24,4 +24,8 @@ public interface StaffMapper {
     int editStaff(Staff staff);
 
     List<Staff> getStaffByDepId(Long depId);
+
+    Dep selectDepById(int depId);
+
+    List<Staff> selectNameList();
 }
