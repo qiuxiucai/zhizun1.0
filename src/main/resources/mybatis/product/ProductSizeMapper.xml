@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.product.size.mapper.ProductSizeMapper">
+
+    <resultMap type="com.ruoyi.project.product.size.domain.ProductSize" id="SizeResult">
+        <result property="sizeId"    column="productsize_id"    />
+        <result property="sizeName"    column="size_name"    />
+        <result property="createBy"       column="create_by"       />
+        <result property="createTime"     column="create_time"     />
+        <result property="updateBy"       column="update_by"       />
+        <result property="updateTime"     column="update_time"     />
+        <result property="sizeRemark"         column="size_remark"          />
+    </resultMap>
+
+    <sql id="selectSizeAll">
+        select *
+        from p_size
+    </sql>
+
+    <select id="selectProductSizeAll" resultMap="SizeResult">
+        <include refid="selectSizeAll"/>
+    </select>
+
+    <select id="selectProductSize" resultMap="SizeResult">
+        <include refid="selectSizeAll"/>
+        <if test="sizeName !=null and sizeName != ''">
+            where size_name like concat('%',#{sizeName},'%')
+        </if>
+
+    </select>
+
+    <insert id="saveProductSize">
+
+        insert into p_size(
+        <if test="sizeName != null and sizeName != ''">size_name,</if>
+        <if test="sizeRemark != null and sizeRemark != ''">size_remark,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )values(
+        <if test="sizeName != null and sizeName != ''">#{sizeName},</if>
+        <if test="sizeRemark != null and sizeRemark != ''">#{sizeRemark},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+
+    </insert>
+
+    <select id="selectProductSizeNameUnique" resultMap="SizeResult">
+        <include refid="selectSizeAll"/>
+        where size_name = #{sizeName}
+    </select>
+
+    <select id="selectProductSizeById" resultMap="SizeResult">
+            <include refid="selectSizeAll"/>
+            where productsize_id = #{sizeId}
+    </select>
+
+    <update id="updateProductSize">
+
+
+        update p_size
+        <set>
+
+            <if test="sizeName != null and sizeName != ''">size_name = #{sizeName},</if>
+
+            <if test="sizeRemark != null  and sizeRemark != ''">size_remark = #{sizeRemark},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where productsize_id = #{sizeId}
+    </update>
+
+    <delete id="removeSizeByIds">
+        delete from p_size where productsize_id in
+        <foreach collection="array" item="sizeId" open="(" separator="," close=")">
+            #{sizeId}
+        </foreach>
+    </delete>
+</mapper>
