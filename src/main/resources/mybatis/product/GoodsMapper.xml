@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.product.details.mapper.GoodsMapper">
+    <resultMap type="com.ruoyi.project.product.details.domain.Goods" id="GoodsResult">
+
+        <result property="productId"    column="pro_id"    />
+        <result property="productModel"    column="pro_model"    />
+        <result property="productName"    column="pro_name"    />
+        <result property="productType"    column="pro_type"    />
+        <result property="productUrl"    column="pro_images"    />
+        <result property="productSeriesId"    column="productseries_id"    />
+        <result property="productStyleId"    column="productstyle_id"    />
+        <result property="productSizeId"    column="productsize_id"    />
+        <result property="productMaterials"    column="pro_materials"    />
+        <result property="productArea"    column="pro_area"    />
+        <result property="productPrice"    column="pro_price"    />
+        <result property="productNum"    column="pro_num"    />
+        <result property="productTotalPrice"    column="pro_totalprice"    />
+        <result property="productStatus"    column="pro_status"    />
+        <result property="productRemark"    column="pro_remark"    />
+        <result property="createBy"       column="create_by"       />
+        <result property="createTime"     column="create_time"     />
+        <result property="updateBy"       column="update_by"       />
+        <result property="updateTime"     column="update_time"     />
+        <result property="remark"         column="remark"          />
+    </resultMap>
+
+    <resultMap type="com.ruoyi.project.product.details.vo.GoodsVO" id="GoodsVOResult">
+
+        <result property="productId"    column="pro_id"    />
+        <result property="productModel"    column="pro_model"    />
+        <result property="productName"    column="pro_name"    />
+        <result property="productType"    column="pro_type"    />
+        <result property="productUrl"    column="pro_images"    />
+        <result property="productSeriesId"    column="productseries_id"    />
+        <result property="productStyleId"    column="productstyle_id"    />
+        <result property="productSizeId"    column="productsize_id"    />
+        <result property="seriesName"    column="series_name"    />
+        <result property="styleName"    column="style_name"    />
+        <result property="sizeName"    column="size_name"    />
+        <result property="productMaterials"    column="pro_materials"    />
+        <result property="productArea"    column="pro_area"    />
+        <result property="productPrice"    column="pro_price"    />
+        <result property="productNum"    column="pro_num"    />
+        <result property="productTotalPrice"    column="pro_totalprice"    />
+        <result property="productStatus"    column="pro_status"    />
+        <result property="productRemark"    column="pro_remark"    />
+        <result property="createBy"       column="create_by"       />
+        <result property="createTime"     column="create_time"     />
+        <result property="updateBy"       column="update_by"       />
+        <result property="updateTime"     column="update_time"     />
+        <result property="remark"         column="remark"          />
+    </resultMap>
+    <sql id="selectProductAll">
+        select *
+        from p_goods
+    </sql>
+
+    <select id="selectGoodsVO" resultMap="GoodsVOResult" parameterType="Goods">
+        select pro_id,pro_model,pro_name, pro_images,pgoods.productseries_id,pgoods.productstyle_id,pgoods.productsize_id,pseries.series_name,pstyle.style_name,psize.size_name,pro_materials,pgoods.create_by,pgoods.create_time,pgoods.update_by,pgoods.update_time,pgoods.remark
+        from p_goods pgoods
+        join p_series pseries
+        on pgoods.productseries_id = pseries.productseries_id
+        join p_style pstyle
+        on pgoods.productstyle_id = pstyle.productstyle_id
+        join p_size psize
+        on pgoods.productsize_id = psize.productsize_id
+        <where>
+            <if test="productModel != null and productModel != ''">
+                AND pgoods.pro_model like concat('%', #{productModel}, '%')
+            </if>
+            <if test="productSeriesId != null and productSeriesId != 0">
+                AND pgoods.productseries_id like concat('%', #{productSeriesId}, '%')
+            </if>
+            <if test="productStyleId != null and productStyleId != 0">
+                AND pgoods.productstyle_id like concat('%', #{productStyleId}, '%')
+            </if>
+            <if test="productSizeId != null and productSizeId != 0">
+                AND pgoods.productsize_id like concat('%', #{productSizeId}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectMaterialsAll" resultType="java.lang.String">
+        select pro_materials from p_goods group by pro_materials
+    </select>
+
+    <select id="checkProductModelNameUnique" resultMap="GoodsResult">
+        <include refid="selectProductAll"/>
+        where pro_model = #{productModel}
+    </select>
+
+    <select id="checkProductNameUnique" resultMap="GoodsResult">
+        <include refid="selectProductAll"/>
+        where pro_name = #{productName}
+    </select>
+
+
+
+    <insert id="savegoods">
+        insert into p_goods(
+        <if test="productModel != null and productModel != ''">pro_model,</if>
+        <if test="productName != null and productName != ''">pro_name,</if>
+        <if test="productType != null and productType != ''">pro_type,</if>
+        <if test="productUrl != null and productUrl != ''">pro_images,</if>
+        <if test="productSeriesId != null and productSeriesId != ''">productseries_id,</if>
+        <if test="productStyleId != null and productStyleId != ''">productstyle_id,</if>
+        <if test="productSizeId != null and productSizeId != ''">productsize_id,</if>
+        <if test="productMaterials != null and productMaterials != ''">pro_materials,</if>
+        <if test="productArea != null and productArea != ''">pro_area,</if>
+        <if test="productPrice != null and productPrice != ''">pro_price,</if>
+        <if test="productNum != null and productNum != ''">pro_num,</if>
+        <if test="productTotalPrice != null and productTotalPrice != ''">pro_totalprice,</if>
+        <if test="productStatus != null and productStatus != ''">pro_status,</if>
+        <if test="productRemark != null and productRemark != ''">pro_remark,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )values(
+        <if test="productModel != null and productModel != ''">#{productModel},</if>
+        <if test="productName != null and productName != ''">#{productName},</if>
+        <if test="productType != null and productType != ''">#{productType},</if>
+        <if test="productUrl != null and productUrl != ''">#{productUrl},</if>
+        <if test="productSeriesId != null and productSeriesId != ''">#{productSeriesId},</if>
+        <if test="productStyleId != null and productStyleId != ''">#{productStyleId},</if>
+        <if test="productSizeId != null and productSizeId != ''">#{productSizeId},</if>
+        <if test="productMaterials != null and productMaterials != ''">#{productMaterials},</if>
+        <if test="productArea != null and productArea != ''">#{productArea},</if>
+        <if test="productPrice != null and productPrice != ''">#{productPrice},</if>
+        <if test="productNum != null and productNum != ''">#{productNum},</if>
+        <if test="productTotalPrice != null and productTotalPrice != ''">#{productTotalPrice},</if>
+        <if test="productStatus != null and productStatus != ''">#{productStatus},</if>
+        <if test="productRemark != null and productRemark != ''">#{productRemark},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
+
+    <select id="countGoods" resultType="java.lang.Long" parameterType="Long">
+        select count(1) from p_goods where productseries_id = #{seriesId}
+    </select>
+
+    <select id="countStyleGoods" resultType="java.lang.Long" parameterType="Long">
+        select count(1) from p_goods where productstyle_id = #{styleId}
+    </select>
+
+    <select id="countSizeGoods" resultType="java.lang.Long">
+        select count(1) from p_goods where productsize_id = #{sizeId}
+    </select>
+
+    <update id="updateGoods">
+        update p_goods
+        <set>
+            <if test="productModel != null and productModel != ''">pro_model = #{productModel} ,</if>
+            <if test="productName != null and productName != ''">pro_name = #{productName},</if>
+            <if test="productType != null and productType != ''">pro_type = #{productType},</if>
+            <if test="productUrl != null and productUrl != ''">pro_images = #{productUrl},</if>
+            <if test="productSeriesId != null and productSeriesId != ''">productseries_id = #{productSeriesId},</if>
+            <if test="productStyleId != null and productStyleId != ''">productstyle_id = #{productStyleId},</if>
+            <if test="productSizeId != null and productSizeId != ''">productsize_id = #{productSizeId},</if>
+            <if test="productMaterials != null and productMaterials != ''">pro_materials = #{productMaterials},</if>
+            <if test="productArea != null and productArea != ''">pro_area = #{productArea},</if>
+            <if test="productPrice != null and productPrice != ''">pro_price = #{productPrice},</if>
+            <if test="productNum != null and productNum != ''">pro_num = #{productNum},</if>
+            <if test="productTotalPrice != null and productTotalPrice != ''">pro_totalprice = #{productTotalPrice},</if>
+            <if test="productStatus != null and productStatus != ''">pro_status = #{productStatus},</if>
+            <if test="productRemark != null and productRemark != ''">pro_remark = #{productRemark},</if>
+            <if test="remark != null and remark != ''">remark,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            update_time = sysdate()
+        </set>
+        where pro_id = #{productId}
+    </update>
+
+    <select id="selectGoodsById" resultMap="GoodsVOResult">
+        select pro_id,pro_model,pro_name, pro_type,pro_images,pgoods.productseries_id,pgoods.productstyle_id,pgoods.productsize_id,pseries.series_name,pstyle.style_name,psize.size_name,pro_materials,pro_area,pro_price,pro_num,pro_totalprice,pro_status,pro_remark,pgoods.create_by,pgoods.create_time,pgoods.update_by,pgoods.update_time,pgoods.remark
+        from p_goods pgoods
+        join p_series pseries
+        on pgoods.productseries_id = pseries.productseries_id
+        join p_style pstyle
+        on pgoods.productstyle_id = pstyle.productstyle_id
+        join p_size psize
+        on pgoods.productsize_id = psize.productsize_id
+        where pro_id = #{productId};
+    </select>
+</mapper>

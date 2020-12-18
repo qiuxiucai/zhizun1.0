@@ -2,6 +2,7 @@ package com.ruoyi.project.product.size.service;
 
 import com.ruoyi.common.constant.SizeConstants;
 import com.ruoyi.framework.web.domain.AjaxResult;
+import com.ruoyi.project.product.details.mapper.GoodsMapper;
 import com.ruoyi.project.product.size.domain.ProductSize;
 import com.ruoyi.project.product.size.mapper.ProductSizeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service("sizetype")
 public class ProductSizeServiceImpl implements IProductSizeService{
 
 
     @Autowired
     private ProductSizeMapper productSizeMapper;
+
+    @Autowired
+    private GoodsMapper goodsMapper;
 
     @Override
     public List<ProductSize> selectProductSizeAll() {
@@ -67,12 +71,12 @@ public class ProductSizeServiceImpl implements IProductSizeService{
     @Override
     public AjaxResult removeSizeByIds(Long[] ids) {
 
-        //        for (Long id : ids) {
-//            Long num = seriesMapper.countProductDetails(ids);
-//            if(num > 0){
-//                return AjaxResult.error("该公告下有内容,不能删除");
-//            }
-//        }
+        for (Long id : ids) {
+            Long num = goodsMapper.countSizeGoods(id);
+            if(num > 0){
+                return AjaxResult.error("该规格下有内容,不能删除");
+            }
+        }
         int result = productSizeMapper.removeSizeByIds(ids);
         if(result == ids.length){
             return AjaxResult.success("删除产品规格成功");

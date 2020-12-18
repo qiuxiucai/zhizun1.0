@@ -2,6 +2,7 @@ package com.ruoyi.project.product.series.service;
 
 import com.ruoyi.common.constant.SeriesConstants;
 import com.ruoyi.framework.web.domain.AjaxResult;
+import com.ruoyi.project.product.details.mapper.GoodsMapper;
 import com.ruoyi.project.product.series.domain.Series;
 import com.ruoyi.project.product.series.mapper.SeriesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service("seriestype")
 public class SeriesServiceImpl implements ISeriesService{
 
     @Autowired
     private SeriesMapper seriesMapper;
 
+    @Autowired
+    private GoodsMapper goodsMapper;
 
     @Override
     public List<Series> selectSeriesAll() {
@@ -65,12 +68,12 @@ public class SeriesServiceImpl implements ISeriesService{
     @Override
     public AjaxResult removeSeriesByIds(Long[] ids) {
 
-//        for (Long id : ids) {
-//            Long num = seriesMapper.countProductDetails(ids);
-//            if(num > 0){
-//                return AjaxResult.error("该公告下有内容,不能删除");
-//            }
-//        }
+        for (Long id : ids) {
+            Long num = goodsMapper.countGoods(id);
+            if(num > 0){
+                return AjaxResult.error("该系列下有内容,不能删除");
+            }
+        }
 
         int result = seriesMapper.removeSeriesByIds(ids);
         if(result == ids.length){
@@ -78,4 +81,6 @@ public class SeriesServiceImpl implements ISeriesService{
         }
         return AjaxResult.error("删除产品系列类型失败");
     }
+
+
 }

@@ -2,7 +2,9 @@ package com.ruoyi.project.product.details.domain;
 
 import com.ruoyi.framework.web.domain.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class Goods extends BaseEntity {
     //产品主键

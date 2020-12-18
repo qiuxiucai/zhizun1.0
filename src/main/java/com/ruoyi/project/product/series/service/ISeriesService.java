@@ -31,4 +31,6 @@ public interface ISeriesService {
     AjaxResult editSeriesType(Series series, String userName);
 
     AjaxResult removeSeriesByIds(Long[] ids);
+
+
 }

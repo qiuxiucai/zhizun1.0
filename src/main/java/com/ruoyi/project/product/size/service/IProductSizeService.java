@@ -2,7 +2,7 @@ package com.ruoyi.project.product.size.service;
 
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.project.product.size.domain.ProductSize;
-import com.ruoyi.project.product.style.domain.ProductStyle;
+
 
 import java.util.List;
 

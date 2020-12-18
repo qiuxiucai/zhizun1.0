@@ -2,6 +2,7 @@ package com.ruoyi.project.product.style.service;
 
 import com.ruoyi.common.constant.StyleConstants;
 import com.ruoyi.framework.web.domain.AjaxResult;
+import com.ruoyi.project.product.details.mapper.GoodsMapper;
 import com.ruoyi.project.product.style.domain.ProductStyle;
 import com.ruoyi.project.product.style.mapper.ProductStyleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +10,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service("styletype")
 public class ProductStyleServiceImpl implements IProductStyleServie {
 
     @Autowired
     private ProductStyleMapper productStyleMapper;
+
+    @Autowired
+    private GoodsMapper goodsMapper;
 
     @Override
     public List<ProductStyle> selectProductStyleAll() {
@@ -63,12 +67,12 @@ public class ProductStyleServiceImpl implements IProductStyleServie {
     @Override
     public AjaxResult removeStyleByIds(Long[] ids) {
 
-        //        for (Long id : ids) {
-//            Long num = seriesMapper.countProductDetails(ids);
-//            if(num > 0){
-//                return AjaxResult.error("该公告下有内容,不能删除");
-//            }
-//        }
+        for (Long id : ids) {
+            Long num = goodsMapper.countStyleGoods(id);
+            if(num > 0){
+                return AjaxResult.error("该风格下有内容,不能删除");
+            }
+        }
         int result = productStyleMapper.removeStyleByIds(ids);
         if(result == ids.length){
             return AjaxResult.success("删除产品风格类型成功");
