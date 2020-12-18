@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="include :: header('项目详情')"/>
 </head>
@@ -118,8 +118,8 @@
                                 <td>[[*{pText}]]</td>
                                 <td>[[*{pStyle}]]</td>
                                 <td>[[*{pTypeName}]]</td>
-                                <td th:text="${#dates.format(itemVO.pStart,'yyyy-MM-dd HH:mm:ss')}"></td>
-                                <td th:text="${#dates.format(itemVO.pEnd,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td>[[*{pStart}]]</td>
+                                <td>[[*{pEnd}]]</td>
                                 <td>[[*{pRemark}]]</td>
                             </tr>
                             </tbody>
@@ -156,22 +156,12 @@
                             <tr>
                                 <td>[[*{productModel}]]</td>
                                 <td>[[*{productName}]]</td>
-                                <td>[[*{dAmount}]]</td>
+                                <td>[[*{productNum}]]</td>
                                 <td>[[*{productPrice}]]</td>
-                                <td>[[*{dAmount * productPrice}]]</td>
+                                <td>[[*{productNum}]]</td>
                                 <td>[[*{productRemark}]]</td>
                             </tr>
                             </tbody>
-                            <!--                            测试导出-->
-                            <thead>
-                            <tr>
-                                <th>
-                                    <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:dict:export">
-                                        <i class="fa fa-download"></i> 导出
-                                    </a>
-                                </th>
-                            </tr>
-                            </thead>
                         </table>
                     </div>
                 </div>
@@ -179,20 +169,5 @@
         </div>
     </div>
 </div>
-
-<script th:inline="javascript">
-    var editFlag = [[${@permission.hasPermi('item:info:edit')}]];
-    var removeFlag = [[${@permission.hasPermi('item:info:remove')}]];
-    var prefix = ctx + "item/info";
-
-    $(function () {
-            var options = {
-                exportUrl: prefix + "/export"
-            }
-            $.table.init(options)
-        }
-    );
-</script>
-
 </body>
 </html>

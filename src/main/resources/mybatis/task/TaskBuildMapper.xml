@@ -70,6 +70,24 @@ delete from t_task where t_id in
 
 
  </delete>
+<insert id="addTask" parameterType="task">
+    insert into t_task(t_id,t_title,t_text,t_start,t_end,dep_name,s_name,t_status,t_annex,t_complete)
+    values(#{tId},#{tTitle},#{tText},#{tStart},#{tEnd},#{depName},#{sName},#{tStatus},#{tAnnex},#{tComplete})
+</insert>
+<select id="selectTaskListById" resultMap="task">
+    <include refid="selectTask"></include>
+    where t_id=#{tId}
+
+
+</select>
+
+ <update id="editTask" parameterType="task">
+     update t_task set t_title=#{tTitle},t_text=#{tText},t_start=#{tStart},t_end=#{tEnd},
+     dep_name=#{depName},s_name=#{sName},
+     t_status=#{tStatus},t_annex=#{tAnnex},t_complete=#{tComplete}
+     where t_id=#{tId}
+ </update>
+
 
 
 </mapper>

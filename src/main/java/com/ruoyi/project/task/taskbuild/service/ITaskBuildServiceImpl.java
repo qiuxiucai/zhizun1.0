@@ -1,9 +1,11 @@
 package com.ruoyi.project.task.taskbuild.service;
 
+import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.project.task.taskbuild.domain.Level;
 import com.ruoyi.project.task.taskbuild.domain.Task;
 
 
+import com.ruoyi.project.task.taskbuild.mapper.TaskBuildMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,13 +28,33 @@ public class ITaskBuildServiceImpl implements ITaskBuildService{
 
     @Override
     public int deleteTaskByIds(Integer[] ids) {
-
-
-
-
-
         return TaskBuildMapper.deleteTaskByIds(ids);
     }
+    @Override
+    public AjaxResult addTask(Task task) {
+        int row = TaskBuildMapper.addTask(task);
+        if(row==1){
+               return AjaxResult.success("添加任务成功");
+        }
+           else {
+               return AjaxResult.error("添加任务失败");
+        }
+    }
+
+    @Override
+    public Task selectTaskListById(int tId){
 
 
+        return TaskBuildMapper.selectTaskListById(tId);
+    }
+
+    @Override
+    public AjaxResult updateTask(Task task) {
+        int row = TaskBuildMapper.editTask(task);
+        if (row == 1) {
+            return AjaxResult.success("修改成功");
+        } else {
+            return AjaxResult.error("修改失败");
+        }
+    }
 }

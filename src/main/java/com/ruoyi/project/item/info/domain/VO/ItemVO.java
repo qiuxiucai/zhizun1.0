@@ -12,5 +12,4 @@ public class ItemVO extends Item {
 
     private String sName; //项目负责人
     private String dName; //订单类别
-    private Integer dAmount; //订单产品数量
 }
