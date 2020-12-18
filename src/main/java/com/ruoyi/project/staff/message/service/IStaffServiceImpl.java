@@ -4,6 +4,7 @@ import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.project.staff.message.domain.Dep;
 import com.ruoyi.project.staff.message.domain.Staff;
+import com.ruoyi.project.staff.message.domain.StaffDetail;
 import com.ruoyi.project.staff.message.domain.StaffJob;
 import com.ruoyi.project.staff.message.domain.vo.StaffVO;
 import com.ruoyi.project.staff.message.mapper.StaffMapper;
@@ -62,9 +63,34 @@ public class IStaffServiceImpl implements IStaffService {
     }
 
     @Override
-    public String checkSJobNumUnique(Staff staff) {
+    public AjaxResult removeStaff(Long[] sJobNums) {
+        int i = staffMapper.removeStaff(sJobNums);
+        if (i == sJobNums.length){
+            return AjaxResult.success("成功删除" + i + "条数据");
+        }
+        return AjaxResult.error("删除失败");
+    }
 
-        return String.valueOf(staffMapper.checkSJobNumUnique(staff));
+    @Override
+    public StaffDetail selectStaffDetailByJobNum(Integer sJobNum) {
+        return staffMapper.selectStaffDetailByJobNum(sJobNum);
+    }
+
+    @Override
+    public Dep getDepsById(int depId) {
+        return staffMapper.getDepsById(depId);
+    }
+
+    @Override
+    public Dep selectByName(String depName) {
+        return staffMapper.selectByName(depName);
+    }
+
+
+    @Override
+    public Integer checkSJobNumUnique(Staff staff) {
+
+        return staffMapper.checkSJobNumUnique(staff);
     }
 
     @Override
