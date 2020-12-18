@@ -93,6 +93,11 @@ public class IStaffServiceImpl implements IStaffService {
         return staffMapper.checkSJobNumUnique(staff);
     }
 
+    public List<Staff> selectAll(){
+        return staffMapper.selectAll();
+    }
+
+
     @Override
     public Staff selectStaffByJobNum(Long jId) {
 

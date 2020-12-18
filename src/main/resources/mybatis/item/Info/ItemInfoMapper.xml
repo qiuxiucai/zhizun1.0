@@ -69,6 +69,56 @@
         <result property="sName"        column="s_name"        />
         <result property="dName"        column="d_name"        />
         <result property="dAmount"        column="d_amount"        />
+        <result property="TypeId"        column="type_id"        />
+        <result property="TypeName"        column="typename"        />
+    </resultMap>
+
+
+
+    <resultMap type="ItemAllVO" id="itemAllVOResult">
+        <id     property="pId"        column="i_id"       />
+        <result property="pNum"      column="i_num"     />
+        <result property="pTitle"      column="i_title"     />
+        <result property="pText"      column="i_text"     />
+        <result property="pTypeName"      column="i_typename"     />
+        <result property="pStatusName"      column="i_statusname"     />
+        <result property="pStart"        column="i_start"        />
+        <result property="pEnd"        column="i_end"        />
+        <result property="pCid"        column="c_id"        />
+        <result property="pTotal"        column="i_total"        />
+        <result property="pPeriod"        column="i_period"        />
+        <result property="pRemark"        column="i_remark"        />
+        <result property="pStyle"        column="i_style"        />
+        <result property="cName"        column="c_name"        />
+        <result property="cPhone"        column="c_phone"        />
+        <result property="cRemark"        column="c_remark"        />
+        <result property="cCompany"        column="c_company"        />
+<!--        <result property="cType"        column="c_type"        />-->
+        <result property="productModel"        column="pro_model"        />
+        <result property="productName"        column="pro_name"        />
+        <result property="productPrice"        column="pro_price"        />
+        <result property="productRemark"        column="pro_remark"        />
+        <result property="sName"        column="s_name"        />
+        <result property="dName"        column="d_name"        />
+        <result property="dAmount"        column="d_amount"        />
+        <result property="TypeId"        column="type_id"        />
+        <result property="TypeName"        column="typename"        />
+    </resultMap>
+
+    <resultMap type="ClienTeleAllVO" id="ClienTeleResult">
+        <id     property="cId"        column="c_id"       />
+        <result property="cName"      column="c_name"     />
+        <result property="cPhone"      column="c_phone"     />
+        <result property="cRemark"      column="c_remark"     />
+        <result property="cCompany"      column="c_company"     />
+        <result property="cType"      column="c_type"     />
+        <result property="TypeId"        column="type_id"        />
+        <result property="TypeName"        column="typename"        />
+    </resultMap>
+
+    <resultMap type="Goods" id="GoodsResult">
+        <result property="productId"        column="pro_id"       />
+        <result property="productName"        column="pro_name"       />
     </resultMap>
 
     <sql id="selectItem">
@@ -77,16 +127,22 @@
 
     <sql id="selectItemVO">
         select *
-        from t_item item join t_client client on item.c_id = client.c_id join p_goods goods on item.pro_id = goods.pro_id
+        from t_item item join t_client client on item.c_id = client.c_id join p_goods goods on item.pro_id = goods.pro_id join t_type type on client.type_id = type.typeid
     </sql>
 
     <sql id="selectItemVO_N">
         select *
         from t_item item join t_client client on item.c_id = client.c_id join p_goods goods on item.pro_id = goods.pro_id join t_staff staff
-        on item.s_id = staff.s_id join t_der der on item.d_did = der.d_id
+        on item.s_id = staff.s_id join t_der der on item.d_did = der.d_id  join t_type type on client.type_id = type.typeid
     </sql>
 
-    <select id="list" resultMap="itemVOResult" parameterType="Item">
+    <sql id="selectItemVO_N1">
+        select *
+        from t_item item join t_client client on item.c_id = client.c_id join p_goods goods on item.pro_id = goods.pro_id join t_staff staff
+        on item.s_id = staff.s_id join t_der der on item.d_did = der.d_id join t_type type on client.type_id = type.typeid
+    </sql>
+
+    <select id="selectAll" resultMap="itemVOResult" parameterType="Item">
         <include refid="selectItemVO"/>
         <if test="pTitle != null and pTitle != ''">
             where item.i_title like concat('%',#{pTitle},'%')
@@ -97,4 +153,59 @@
         <include refid="selectItemVO_N"/>
         where item.i_id = #{pId}
     </select>
+
+    <select id="selectByIdVO" resultMap="itemAllVOResult">
+        <include refid="selectItemVO_N1"/>
+        where item.i_id = #{pId}
+    </select>
+
+    <select id="selectTypeAll" resultMap="ClienTeleResult">
+        SELECT typeid,typename FROM t_type
+    </select>
+
+    <select id="selectGoodsAll" resultMap="GoodsResult">
+        SELECT pro_name,pro_id FROM p_goods
+    </select>
+
+    <update id="updataItemAll">
+        update t_item
+        <set>
+            <if test="pNum != null and pNum != ''">i_num = #{pNum},</if>
+            <if test="pTitle != null and pTitle != ''">i_title = #{pTitle},</if>
+            <if test="pText != null and pText != ''">i_text = #{pText},</if>
+            <if test="pTypeId != null">i_typeid = #{pTypeId},</if>
+            <if test="pTypeName != null and pTypeName != ''">i_typename = #{pTypeName},</if>
+            <if test="pStatuc != null">i_status = #{pStatuc},</if>
+            <if test="pStatusName != null and pStatusName != ''">i_statusname = #{pStatusName},</if>
+            <if test="pCreate != null and pCreate != ''">i_create = #{pCreate},</if>
+            <if test="pStart != null">i_start = #{pStart},</if>
+            <if test="pEnd != null">i_end = #{pEnd},</if>
+            <if test="pCid != null">c_id = #{pCid},</if>
+            <if test="pTotal != null">i_total = #{pTotal},</if>
+            <if test="pPeriod != null and pPeriod != ''">i_period = #{pPeriod},</if>
+            <if test="pDid != null">d_did = #{pDid},</if>
+            <if test="pRemark != null and pRemark != ''">i_remark = #{pRemark},</if>
+            <if test="pSid != null">s_id = #{pSid},</if>
+            <if test="pStyle != null">i_style = #{pStyle},</if>
+            <if test="pProId != null">pro_id = #{pProId},</if>
+        </set>
+        where i_id = #{pId}
+    </update>
+
+
+    <update id="updataClienteleAll">
+
+        update t_client
+        <set>
+            <if test="cName != null and cName != ''">c_name = #{cName},</if>
+            <if test="cPhone != null and cPhone != ''">c_phone = #{cPhone},</if>
+            <if test="cRemark != null and cRemark != ''">c_remark = #{cRemark},</if>
+            <if test="cCompany != null and cCompany != ''">c_company = #{cCompany},</if>
+            <if test="cType != null and cType != ''">c_type = #{cType},</if>
+            <if test="dType != null">d_type = #{dType},</if>
+            <if test="TypeId != null">type_id = #{TypeId},</if>
+        </set>
+        where c_id = #{cId}
+
+    </update>
 </mapper>

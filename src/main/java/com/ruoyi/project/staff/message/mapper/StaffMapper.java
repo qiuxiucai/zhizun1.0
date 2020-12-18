@@ -1,6 +1,5 @@
 package com.ruoyi.project.staff.message.mapper;
 
-import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.project.staff.message.domain.Dep;
 import com.ruoyi.project.staff.message.domain.Staff;
 import com.ruoyi.project.staff.message.domain.StaffDetail;
@@ -34,4 +33,6 @@ public interface StaffMapper {
     Dep getDepsById(int depId);
 
     Dep selectByName(String depName);
+
+    List<Staff> selectAll();
 }

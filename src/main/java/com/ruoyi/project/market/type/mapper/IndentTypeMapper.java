@@ -16,4 +16,5 @@ public interface IndentTypeMapper {
 
     Clientele selectByName();
 
+    Clientele selectByTypeID(Integer dType);
 }

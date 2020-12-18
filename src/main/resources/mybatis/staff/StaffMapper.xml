@@ -75,7 +75,7 @@
         <include refid="selectStaffVOResult">
         </include>
         <where>
-            <if test="sStatus != null and sStatus != '' || sStatus == 0">
+            <if test="sStatus != null and sStatus != ''">
                 AND s_status = #{sStatus}
             </if>
             <if test="depId != null and depId != ''">
@@ -176,6 +176,11 @@
         <include refid="selectStaffResult">
         </include>
         where dep_id = #{depId}
+    </select>
+
+    <select id="selectAll" resultMap="staffResult">
+        <include refid="selectStaffResult"/>
+        where j_id = 1
     </select>
 
     <select id="getDepsById" resultMap="depResult">

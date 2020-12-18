@@ -40,7 +40,7 @@
                                 <td>[[*{pTitle}]]</td>
                                 <td>[[*{pNum}]]</td>
                                 <td>[[*{sName}]]</td>
-                                <td>[[*{pTotal}]]</td>
+                                <td>[[*{pTotal}]]元</td>
                                 <td>[[*{pPeriod}]]</td>
                                 <td>[[*{dName}]]</td>
                             </tr>
@@ -78,7 +78,7 @@
                             <tr>
                                 <td>[[*{cId}]]</td>
                                 <td>[[*{cName}]]</td>
-                                <td>[[*{cType}]]</td>
+                                <td>[[*{TypeName}]]</td>
                                 <td>[[*{cCompany}]]</td>
                                 <td>[[*{cPhone}]]</td>
                                 <td>[[*{cRemark}]]</td>
@@ -156,22 +156,12 @@
                             <tr>
                                 <td>[[*{productModel}]]</td>
                                 <td>[[*{productName}]]</td>
-                                <td>[[*{dAmount}]]</td>
-                                <td>[[*{productPrice}]]</td>
-                                <td>[[*{dAmount * productPrice}]]</td>
+                                <td>[[*{dAmount}]]个</td>
+                                <td>[[*{productPrice}]]元</td>
+                                <td>[[*{dAmount * productPrice}]]元</td>
                                 <td>[[*{productRemark}]]</td>
                             </tr>
                             </tbody>
-                            <!--                            测试导出-->
-                            <thead>
-                            <tr>
-                                <th>
-                                    <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:dict:export">
-                                        <i class="fa fa-download"></i> 导出
-                                    </a>
-                                </th>
-                            </tr>
-                            </thead>
                         </table>
                     </div>
                 </div>
@@ -179,20 +169,6 @@
         </div>
     </div>
 </div>
-
-<script th:inline="javascript">
-    var editFlag = [[${@permission.hasPermi('item:info:edit')}]];
-    var removeFlag = [[${@permission.hasPermi('item:info:remove')}]];
-    var prefix = ctx + "item/info";
-
-    $(function () {
-            var options = {
-                exportUrl: prefix + "/export"
-            }
-            $.table.init(options)
-        }
-    );
-</script>
 
 </body>
 </html>

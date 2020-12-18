@@ -28,4 +28,5 @@ public class Clientele extends Goods {
     //类型外键 1临时订单 2vip 订单 3普通订单
     private  Integer dType;
 
+
 }

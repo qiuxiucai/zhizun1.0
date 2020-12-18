@@ -59,4 +59,8 @@
         select c_type from t_client
     </select>
 
+    <select id="selectByTypeID" resultMap="ClienteleResult">
+        <include refid="selectIndentAVo"/>
+        where d_type = #{dType}
+    </select>
 </mapper>

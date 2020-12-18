@@ -341,7 +341,7 @@ var table = {
     		exportExcel: function(formId) {
     			table.set();
     			$.modal.confirm("确定导出所有" + table.options.modalName + "吗？", function() {
-	    			var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
+	    			var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId; //
 	    			$.modal.loading("正在导出数据，请稍后...");
 	    			$.post(table.options.exportUrl, $("#" + currentId).serializeArray(), function(result) {
 	    				if (result.code == web_status.SUCCESS) {

@@ -43,4 +43,8 @@ public class IndentTypeServiceImpl implements IIndentTypeService {
     }
 
 
+    public Clientele selectByTypeID(Integer dType) {
+
+       return indentTypeMapper.selectByTypeID(dType);
+    }
 }
