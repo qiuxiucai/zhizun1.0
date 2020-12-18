@@ -70,7 +70,7 @@ public class IndentController extends BaseController {
      */
 
     @PostMapping("/add")
-    public AjaxResult addAll(Item item, Clientele clientele, Goods goods) throws ParseException {
+    public AjaxResult addAll(Item item, Clientele clientele, Goods goods){
 
 //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 //        Date parse = simpleDateFormat.parse(dataStart);
@@ -80,6 +80,8 @@ public class IndentController extends BaseController {
 //        System.out.println(format);
 //        item.setPStart(parse);
 //        System.out.println(item);
+
+
 //        char del='T';
 //        String EndTime="";
 //        //2020-12-25T22:22
@@ -94,25 +96,6 @@ public class IndentController extends BaseController {
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");//转换时区格式
 //        Date etime=sdf.parse(EndTime); //Mon Nov 30 15:02:00 CST 2020
 //        item.setPStart(etime);
-//
-//
-//        char del1='T';
-//        String EndTime1="";
-//        //2020-12-25T22:22
-//        for(int i=0;i<dataEnd.length();i++){
-//            if(dataEnd.charAt(i)!=del1){
-//                EndTime1+=dataEnd.charAt(i);
-//            }
-//        }
-//        String s3 = EndTime1.substring(0, 10);
-//        String s4=  EndTime1.substring(10,14);
-//        EndTime1=s3+" "+s4;
-//        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");//转换时区格式
-//        Date etime1=sdf1.parse(EndTime1); //Mon Nov 30 15:02:00 CST 2020
-//
-//        item.setPEnd(etime1);
-
-
 
        return  indentService.addAll(item,clientele,goods);
 
