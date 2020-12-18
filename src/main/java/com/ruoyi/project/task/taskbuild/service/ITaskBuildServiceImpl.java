@@ -47,4 +47,14 @@ public class ITaskBuildServiceImpl implements ITaskBuildService{
 
         return TaskBuildMapper.selectTaskListById(tId);
     }
+
+    @Override
+    public AjaxResult updateTask(Task task) {
+        int row = TaskBuildMapper.editTask(task);
+        if (row == 1) {
+            return AjaxResult.success("修改成功");
+        } else {
+            return AjaxResult.error("修改失败");
+        }
+    }
 }

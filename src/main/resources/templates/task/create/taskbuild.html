@@ -41,6 +41,10 @@
             <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="bulletin:content:remove">
                 <i class="fa fa-remove"></i> 删除
             </a>
+            <a class="btn btn-warning" onclick="$.table.exportExcel()">
+                <i class="fa fa-download"></i> 导出
+            </a>
+
         </div>
 
 
@@ -135,5 +139,33 @@
         $.table.init(options);
     });
 </script>
+<script>
+    function exportExcelVO(formId) {
+        console.log(formId)
+        $.modal.confirm("确定导出" + table.options.modalName + "详情吗？", function () {
+            var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId; //
+            $.modal.loading("正在导出数据，请稍后...");
+            $.post(table.options.exportUrl ,{"pid":formId}, function (result) {
+                console.log("开始下载")
+                if (result.code == web_status.SUCCESS) {
+                    console.log("开始下载")
+                    window.location.href = ctx + "common/download?fileName=" + encodeURI(result.msg) + "&delete=" + true;
+                } else if (result.code == web_status.WARNING) {
+                    $.modal.alertWarning(result.msg)
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+            });
+        });
+    }
+
+
+
+
+
+</script>
 </body>
+
+
 </html>

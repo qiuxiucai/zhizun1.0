@@ -19,4 +19,6 @@ public interface ITaskBuildService {
     AjaxResult addTask(Task task);
 
     Task selectTaskListById(int tId);
+
+    AjaxResult updateTask(Task task);
 }

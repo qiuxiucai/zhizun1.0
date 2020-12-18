@@ -28,4 +28,6 @@ public interface StaffMapper {
     Dep selectDepById(int depId);
 
     List<Staff> selectNameList();
+
+    Dep selectStaffByName(String depName);
 }

@@ -16,4 +16,6 @@ public interface TaskBuildMapper {
     int addTask(Task task);
 
     Task selectTaskListById(int tId);
+
+    int editTask(Task task);
 }

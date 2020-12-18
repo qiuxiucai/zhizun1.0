@@ -29,4 +29,7 @@ public interface IStaffService {
     Dep getDepsById(int depId);
 
     List<Staff> selectNameList();
+
+
+    Dep selectByName(String depName);
 }

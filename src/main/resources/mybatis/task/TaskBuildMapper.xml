@@ -80,4 +80,14 @@ delete from t_task where t_id in
 
 
 </select>
+
+ <update id="editTask" parameterType="task">
+     update t_task set t_title=#{tTitle},t_text=#{tText},t_start=#{tStart},t_end=#{tEnd},
+     dep_name=#{depName},s_name=#{sName},
+     t_status=#{tStatus},t_annex=#{tAnnex},t_complete=#{tComplete}
+     where t_id=#{tId}
+ </update>
+
+
+
 </mapper>

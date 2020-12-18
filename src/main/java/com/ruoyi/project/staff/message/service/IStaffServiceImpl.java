@@ -78,6 +78,12 @@ public class IStaffServiceImpl implements IStaffService {
     }
 
     @Override
+    public Dep selectByName(String depName) {
+        return staffMapper.selectStaffByName(depName);
+    }
+
+
+    @Override
     public String checkSJobNumUnique(Staff staff) {
 
         return String.valueOf(staffMapper.checkSJobNumUnique(staff));
@@ -88,4 +94,8 @@ public class IStaffServiceImpl implements IStaffService {
 
         return staffMapper.selectStaffByJobNum(jId);
     }
+
+
+
+
 }

@@ -194,4 +194,13 @@
 
 
     </select>
+
+    <select id="selectStaffByName" resultMap="depResult">
+
+    <include refid="selectDepResult"></include>
+    where dep_name= #{depName}
+
+
+    </select>
+
 </mapper>

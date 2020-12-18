@@ -9,6 +9,7 @@ import com.ruoyi.project.staff.message.domain.Dep;
 import com.ruoyi.project.staff.message.domain.Staff;
 import com.ruoyi.project.staff.message.service.IStaffService;
 
+import com.ruoyi.project.system.dept.service.IDeptService;
 import com.ruoyi.project.task.taskbuild.domain.Task;
 import com.ruoyi.project.task.taskbuild.service.ITaskBuildService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -35,6 +36,10 @@ public class TaskBuildController extends BaseController {
 
   @Autowired
   private IStaffService iStaffService;
+
+
+
+
 
     @RequiresPermissions("task:build:view")
     @GetMapping()
@@ -132,12 +137,49 @@ public class TaskBuildController extends BaseController {
     @GetMapping("/edit/{tId}")
     @RequiresPermissions("task:build:edit")
     public String editTask(@PathVariable int tId, Model m) {
-        System.out.println("修改任务");
+       /* System.out.println("修改任务");*/
         System.out.println("tId = " + tId);
         Task task = iTaskBuildService.selectTaskListById(tId);
+        System.out.println("task = " + task);
+        String depName = task.getDepName();
+        System.out.println("depName = " + depName);
+        Dep sid = iStaffService.selectByName(depName);
+        System.out.println("sid = " + sid);
+        Long depId=(long)sid.getDeptId();
+        List<Staff> list = iStaffService.getStaffByDepId(depId);
+        m.addAttribute("list",list);
         m.addAttribute("taskEdit",task);
         return prefix + "/edit";
     }
+    @PostMapping("/editTask")
+    @ResponseBody
+    public AjaxResult editTask(Task task){
+        System.out.println("task = " + task);
+        int depId= (Integer.parseInt(task.getDepName()));
+        Dep dep = iStaffService.getDepsById(depId);
+        Task time= iTaskBuildService.selectTaskListById(task.getTId());
+        System.out.println("time = " + time.getTStart());
+        String depName=dep.getDeptName();
+        System.out.println("depName = " + depName);
+        Task task1= new Task();
+        task1.setTId(task.getTId());
+        task1.setDepName(depName);
+        task1.setTText(task.getTText());
+        task1.setTComplete(task.getTComplete());
+        task1.setTAnnex(null);
+        task1.setTStart(time.getTStart());
+        task1.setTEnd(time.getTEnd());
+        task1.setSName(task.getSName());
+        task1.setTTitle(task.getTTitle());
+        task1.setTStatus(task.getTStatus());
+        return iTaskBuildService.updateTask(task1);
+
+      }
+
+
+
+
+
 
 
 }
