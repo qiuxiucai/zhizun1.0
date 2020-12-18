@@ -177,30 +177,4 @@
         </include>
         where dep_id = #{depId}
     </select>
-
-    <select id="selectDepById" resultMap="depResult">
-
-        <include refid="selectDepResult">
-
-
-        </include>
-
-       where dept_id = #{depId}
-    </select>
-
-
-    <select id="selectNameList" resultMap="staffResult">
-       <include refid="selectStaffResult"></include>
-
-
-    </select>
-
-    <select id="selectStaffByName" resultMap="depResult">
-
-    <include refid="selectDepResult"></include>
-    where dep_name= #{depName}
-
-
-    </select>
-
 </mapper>

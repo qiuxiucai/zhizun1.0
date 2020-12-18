@@ -31,13 +31,13 @@
     $("#form-post-edit").validate({
         onkeyup: false,
         rules:{
-            typeName:{
+            seriesName:{
                 remote: {
                     url: ctx + "product/series/checkSeriesNameUnique",
                     type: "post",
                     dataType: "json",
                     data: {
-                        "SeriesName" : function() {
+                        "seriesName" : function() {
                             return $.common.trim($("#seriesName").val());
                         }
                     },
@@ -49,7 +49,7 @@
 
         },
         messages: {
-            "SeriesName": {
+            "seriesName": {
                 remote: "系列名称已经存在"
             }
         },

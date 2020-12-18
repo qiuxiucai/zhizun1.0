@@ -1,5 +1,6 @@
 package com.ruoyi.project.item.info.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.framework.web.domain.BaseEntity;
 import com.ruoyi.project.market.indent.domain.Clientele;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.util.Date;
 @Data
 public class Item extends Clientele {
 
+
     private Integer pId; //项目表主键
     private String pNum; //项目编号
     private String pTitle; //项目名称
@@ -22,7 +24,9 @@ public class Item extends Clientele {
     private Integer pStatuc; //项目状态值
     private String pStatusName; //项目状态名称
     private String pCreate; //项目创建人
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date pStart; //项目创建时间
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date pEnd; //项目结束时间
     private Integer pCid; //客户表外键
     private Long pTotal; //项目总金额
@@ -35,7 +39,7 @@ public class Item extends Clientele {
 
 
 
-//      `i_id` int(11) NOT NULL COMMENT '项目表主键',
+    //      `i_id` int(11) NOT NULL COMMENT '项目表主键',
 //            `i_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '项目编号',
 //            `i_title` varchar(255) DEFAULT NULL COMMENT '项目名称',
 //            `i_text` varchar(255) DEFAULT NULL COMMENT '项目内容',

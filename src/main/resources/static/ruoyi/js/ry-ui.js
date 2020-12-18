@@ -707,7 +707,7 @@ var table = {
                     url = "/404.html";
                 }
                 if ($.common.isEmpty(width)) {
-                	width = 800;
+                	width = 1200;
                 }
                 if ($.common.isEmpty(height)) {
                 	height = ($(window).height() - 50);
@@ -955,7 +955,7 @@ var table = {
             	$.modal.open("添加" + table.options.modalName, $.operate.addUrl(id));
             },
             // 添加信息，以tab页展现
-            addTab: function (id) {
+            addTab: function (id) {F
             	table.set();
                 $.modal.openTab("添加" + table.options.modalName, $.operate.addUrl(id));
             },

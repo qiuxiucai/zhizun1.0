@@ -62,28 +62,6 @@ public class IStaffServiceImpl implements IStaffService {
     }
 
     @Override
-    public Dep getDepsById(int depId) {
-
-
-        return staffMapper.selectDepById(depId);
-    }
-
-    @Override
-    public List<Staff> selectNameList() {
-
-
-
-
-        return staffMapper.selectNameList();
-    }
-
-    @Override
-    public Dep selectByName(String depName) {
-        return staffMapper.selectStaffByName(depName);
-    }
-
-
-    @Override
     public String checkSJobNumUnique(Staff staff) {
 
         return String.valueOf(staffMapper.checkSJobNumUnique(staff));
@@ -94,8 +72,4 @@ public class IStaffServiceImpl implements IStaffService {
 
         return staffMapper.selectStaffByJobNum(jId);
     }
-
-
-
-
 }

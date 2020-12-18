@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.market.indent.mapper.IndentMapper">
+    <!--客户表映射-->
+    <resultMap type="com.ruoyi.project.market.indent.domain.Clientele" id="ClienteleResult">
+        <id property="cId" column="c_id"/>
+        <result property="cName" column="c_name"/>
+        <result property="cPhone" column="c_phone"/>
+        <result property="cRemark" column="c_remark"/>
+        <result property="cCompany" column="c_company"/>
+        <result property="cType" column="c_type"/>
+        <result property="dType" column="d_type"/>
+    </resultMap>
+
+<!--    项目表映射-->
+    <resultMap type="com.ruoyi.project.item.info.domain.Item" id="ItemResult">
+        <id property="pId" column="i_id"/>
+        <result property="pNum" column="i_num"/>
+        <result property="pTitle" column="i_title"/>
+        <result property="pText" column="i_text"/>
+        <result property="pTypeId" column="i_typeid"/>
+        <result property="pTypeName" column="i_typename"/>
+        <result property="pStatuc" column="i_status"/>
+        <result property="pStatusName" column="i_statusname"/>
+        <result property="pCreate" column="i_create"/>
+        <result property="pStart" column="i_start"/>
+        <result property="pEnd" column="i_end"/>
+        <result property="pCid" column="c_id"/>
+        <result property="pTotal" column="i_total"/>
+        <result property="pPeriod" column="i_period"/>
+        <result property="pDid" column="d_did"/>
+        <result property="pRemark" column="i_remark"/>
+        <result property="pSid" column="s_id"/>
+    </resultMap>
+
+<!--产品表映射-->
+    <resultMap type="com.ruoyi.project.product.details.domain.Goods" id="GoodsVOResult">
+        <result property="productId"    column="pro_id"    />
+        <result property="productModel"    column="pro_model"    />
+        <result property="productName"    column="pro_name"    />
+        <result property="productType"    column="pro_type"    />
+        <result property="productUrl"    column="pro_images"    />
+        <result property="productSeriesId"    column="productseries_id"    />
+        <result property="productStyleId"    column="productstyle_id"    />
+        <result property="productSizeId"    column="productsize_id"    />
+        <result property="productMaterials"    column="pro_materials"    />
+        <result property="productArea"    column="pro_area"    />
+        <result property="productPrice"    column="pro_price"    />
+        <result property="productNum"    column="pro_num"    />
+        <result property="productTotalPrice"    column="pro_totalprice"    />
+        <result property="productStatus"    column="pro_status"    />
+        <result property="productRemark"    column="pro_remark"    />
+        <result property="createBy"       column="create_by"       />
+        <result property="createTime"     column="create_time"     />
+        <result property="updateBy"       column="update_by"       />
+        <result property="updateTime"     column="update_time"     />
+        <result property="remark"         column="remark"          />
+    </resultMap>
+
+<!--    添加客户表-->
+    <insert id="addClientele" useGeneratedKeys="true" keyProperty="cId">
+        insert into t_client(
+
+        <if test="cName != null and cName != ''">c_name,</if>
+        <if test="cPhone != null and cPhone != ''">c_phone,</if>
+        <if test="cRemark != null and cRemark != ''">c_remark,</if>
+        <if test="cCompany != null and cCompany != ''">c_company,</if>
+        <if test="cType != null and cType != ''">c_type,</if>
+        <if test="dType != null and dType != ''">d_type</if>
+        )values(
+        <if test="cName != null and cName != ''">#{cName},</if>
+        <if test="cPhone != null and cPhone != ''">#{cPhone},</if>
+        <if test="cRemark != null and cRemark != ''">#{cRemark},</if>
+        <if test="cCompany != null and cCompany != ''">#{cCompany},</if>
+        <if test="cType != null and cType != ''">#{cType},</if>
+        <if test="dType != null and dType != ''">#{dType}</if>
+        )
+    </insert>
+
+<!--添加项目表-->
+    <insert id="addItem"  useGeneratedKeys="true" keyProperty="pId">
+        insert into t_item(
+
+        <if test="pNum != null and pNum != ''">i_num,</if>
+        <if test="pTitle != null and pTitle != ''">i_title,</if>
+        <if test="pText != null and pText != ''">i_text,</if>
+        <if test="pTypeId != null and pTypeId != ''">i_typeid,</if>
+        <if test="pTypeName != null and pTypeName != ''">i_typename,</if>
+        <if test="pStatuc != null and pStatuc != ''">i_status,</if>
+        <if test="pStatusName != null and pStatusName != ''">i_statusname,</if>
+        <if test="pCreate != null and pCreate != ''">i_create,</if>
+        <if test="pStart != null">i_start,</if>
+        <if test="pEnd != null">i_end,</if>
+        <if test="pCid != null and pCid != ''">c_id,</if>
+        <if test="pTotal != null and pTotal != ''">i_total,</if>
+        <if test="pPeriod != null and pPeriod != ''">i_period,</if>
+        <if test="pDid != null and pDid != ''">d_did,</if>
+        <if test="pRemark != null and pRemark != ''">i_remark,</if>
+        <if test="pSid != null and pSid != ''">s_id</if>
+
+        )values(
+        <if test="pNum != null and pNum != ''">#{pNum},</if>
+        <if test="pTitle != null and pTitle != ''">#{pTitle},</if>
+        <if test="pText != null and pText != ''">#{pText},</if>
+        <if test="pTypeId != null and pTypeId != ''">#{pTypeId},</if>
+        <if test="pTypeName != null and pTypeName != ''">#{pTypeName},</if>
+        <if test="pStatuc != null and pStatuc != ''">#{pStatuc},</if>
+        <if test="pStatusName != null and pStatusName != ''">#{pStatusName},</if>
+        <if test="pCreate != null and pCreate != ''">#{pCreate},</if>
+        <if test="pStart != null">#{pStart},</if>
+        <if test="pEnd != null">#{pEnd},</if>
+        <if test="pCid != null and pCid != ''">#{pCid},</if>
+        <if test="pTotal != null and pTotal != ''">#{pTotal},</if>
+        <if test="pPeriod != null and pPeriod != ''">#{pPeriod},</if>
+        <if test="pDid != null and pDid != ''">#{pDid},</if>
+        <if test="pRemark != null and pRemark != ''">#{pRemark},</if>
+        <if test="pSid != null and pSid != ''">#{pSid}</if>
+        )
+    </insert>
+
+<!--产品添加-->
+    <insert id="addGoods">
+        insert into p_goods(
+
+        <if test="productModel != null and productModel != ''">pro_model,</if>
+        <if test="productName != null and productName != ''">pro_name,</if>
+        <if test="productType != null and productType != ''">pro_type,</if>
+        <if test="productUrl != null and productUrl != ''">pro_images,</if>
+        <if test="productSeriesId != null and productSeriesId != ''">productseries_id,</if>
+        <if test="productStyleId != null and productStyleId != ''">productstyle_id,</if>
+        <if test="productSizeId != null and productSizeId != ''">productsize_id,</if>
+        <if test="productMaterials != null and productMaterials != ''">pro_materials,</if>
+        <if test="productArea != null and productArea != ''">pro_area,</if>
+        <if test="productPrice != null and productPrice != ''">pro_price,</if>
+        <if test="productNum != null and productNum != ''">pro_num,</if>
+        <if test="productTotalPrice != null and productTotalPrice != ''">pro_totalprice,</if>
+        <if test="productStatus != null and productStatus != ''">pro_status,</if>
+        <if test="productRemark != null and productRemark != ''">pro_remark,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        <if test="createTime != null and createTime != ''">create_time,</if>
+        <if test="updateBy != null and updateBy != ''">update_by,</if>
+        <if test="updateTime != null and updateTime != ''">update_time,</if>
+        <if test="remark != null and remark != ''">remark</if>
+
+        )values(
+        <if test="productModel != null and productModel != ''">#{productModel},</if>
+        <if test="productName != null and productName != ''">#{productName},</if>
+        <if test="productType != null and productType != ''">#{productType},</if>
+        <if test="productUrl != null and productUrl != ''">#{productUrl},</if>
+        <if test="productSeriesId != null and productSeriesId != ''">#{productSeriesId},</if>
+        <if test="productStyleId != null and productStyleId != ''">#{productStyleId},</if>
+        <if test="productSizeId != null and productSizeId != ''">#{productSizeId},</if>
+        <if test="productMaterials != null and productMaterials != ''">#{productMaterials},</if>
+        <if test="productArea != null and productArea != ''">#{productArea},</if>
+        <if test="productPrice != null and productPrice != ''">#{productPrice},</if>
+        <if test="productNum != null and productNum != ''">#{productNum},</if>
+        <if test="productTotalPrice != null and productTotalPrice != ''">#{productTotalPrice},</if>
+        <if test="productStatus != null and productStatus != ''">#{productStatus},</if>
+        <if test="productRemark != null and productRemark != ''">#{productRemark},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        <if test="createTime != null and createTime != ''">#{createTime},</if>
+        <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+        <if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+        <if test="remark != null and remark != ''">#{remark}</if>
+        )
+    </insert>
+
+</mapper>

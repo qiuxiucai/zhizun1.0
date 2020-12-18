@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('新增产品风格')" />
+</head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-post-add">
+			<div class="form-group">
+				<label class="col-sm-3 control-label ">风格名称：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" name="styleName" id="styleName" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">风格备注：</label>
+				<div class="col-sm-8">
+					<textarea id="styleRemark" name="styleRemark" class="form-control"></textarea>
+				</div>
+			</div>
+		</form>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script type="text/javascript">
+		var prefix = ctx + "product/style";
+	    
+		$("#form-post-add").validate({
+			onkeyup: false,
+			rules:{
+				styleName:{
+					remote: {
+		                url: ctx + "product/style/checkProductStyleNameUnique",
+		                type: "post",
+		                dataType: "json",
+		                data: {
+		                	"styleName" : function() {
+		                        return $.common.trim($("#styleName").val());
+		                    }
+		                },
+		                dataFilter: function(data, type) {
+		                	return $.validate.unique(data);
+		                }
+		            }
+				},
+			},
+			messages: {
+		        "styleName": {
+		            remote: "产品风格已经存在"
+		        }
+		    },
+		    focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	        	$.operate.save(prefix + "/add", $('#form-post-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

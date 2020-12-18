@@ -4,9 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.project.market.type.mapper.IndentTypeMapper">
 
-    <resultMap type="com.ruoyi.project.market.indent.domain.Indent" id="IndentTypeResult">
+    <resultMap type="com.ruoyi.project.market.type.domain.IndentVO" id="IndentTypeResult">
         <id     property="dId"     column="d_id"       />
         <result property="dType"        column="d_type"     />
+        <result property="count"        column="count"     />
         <result property="dName"  column="d_name"     />
         <result property="dNum"   column="d_num"     />
         <result property="dAmount"      column="d_amount"     />
@@ -15,23 +16,47 @@
         <result property="cId"    column="c_id"   />
     </resultMap>
 
+    <resultMap type="com.ruoyi.project.market.indent.domain.Clientele" id="ClienteleResult">
+        <id     property="cId"     column="d_id"       />
+        <result property="dType"        column="d_type"     />
+        <result property="cPhone"        column="count"     />
+        <result property="cRemark"  column="d_name"     />
+        <result property="cCompany"   column="d_num"     />
+        <result property="cType"      column="d_amount"     />
+        <result property="cRemark"    column="d_remark"   />
+
+    </resultMap>
+
+
     <sql id="selectIndentAVo">
         select d_id, d_type, d_name, d_num, d_amount, d_remark, g_num,c_id
 		from t_der
     </sql>
 
     <select id="selectIndentAll" resultMap="IndentTypeResult">
-        <include refid="selectIndentAVo"/>
+        select t1.d_name,t1.d_type,t2.c_type,t1.d_id,t1.d_remark,count(t2.c_type) count
+        from t_der t1 join t_client t2 on t1.d_type = t2.d_type
 
         <where>
         <if test="dName != null and dName != ''">
-            d_name like concat('%', #{dName}, '%')
+            t1.d_name like concat('%', #{dName}, '%')
         </if>
         </where>
 
+        group by t2.c_type
     </select>
 
     <select id="selectIndent" resultMap="IndentTypeResult">
         <include refid="selectIndentAVo"/>
     </select>
+
+    <select id="selectIndentName" resultMap="IndentTypeResult">
+        <include refid="selectIndentAVo"/>
+        where d_id=#{dId}
+    </select>
+
+    <select id="selectByName" resultMap="ClienteleResult">
+        select c_type from t_client
+    </select>
+
 </mapper>

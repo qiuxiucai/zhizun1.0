@@ -26,10 +26,4 @@ public interface IStaffService {
 
     List<Staff> getStaffByDepId(Long depId);
 
-    Dep getDepsById(int depId);
-
-    List<Staff> selectNameList();
-
-
-    Dep selectByName(String depName);
 }
