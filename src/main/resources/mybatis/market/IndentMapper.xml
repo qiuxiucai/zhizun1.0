@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.market.indent.mapper.IndentMapper">
+    <resultMap type="com.ruoyi.project.market.indent.domain.IndentAllVO" id="IndentResult">
+        <id property="pId" column="i_id"/>
+        <result property="pNum" column="i_num"/>
+        <result property="pTitle" column="i_title"/>
+        <result property="pText" column="i_text"/>
+        <result property="pTypeId" column="i_typeid"/>
+        <result property="pTypeName" column="i_typename"/>
+        <result property="pStatuc" column="i_status"/>
+        <result property="pStatusName" column="i_statusname"/>
+        <result property="pCreate" column="i_create"/>
+        <result property="pStart" column="i_start"/>
+        <result property="pEnd" column="i_end"/>
+        <result property="pCid" column="c_id"/>
+        <result property="pTotal" column="i_total"/>
+        <result property="pPeriod" column="i_period"/>
+        <result property="pDid" column="d_did"/>
+        <result property="pRemark" column="i_remark"/>
+        <result property="pSid" column="s_id"/>
+
+        <result property="sId" column="s_id"/>
+        <!--        <id property="sId" column="s_id"/>-->
+        <result property="sJobNum" column="s_job_num"/>
+        <result property="sName" column="s_name"/>
+        <result property="jId" column="j_id"/>
+        <result property="sPhone" column="s_phone"/>
+        <result property="depId" column="dep_id"/>
+        <result property="sDate" column="s_date"/>
+        <result property="sStatus" column="s_status"/>
+
+        <result property="cId" column="c_id"/>
+        <!--            <id property="cId" column="c_id"/>-->
+        <result property="cName" column="c_name"/>
+        <result property="cPhone" column="c_phone"/>
+        <result property="cRemark" column="c_remark"/>
+        <result property="cCompany" column="c_company"/>
+        <result property="cType" column="c_type"/>
+        <result property="dType" column="d_type"/>
+
+        <result property="productId"        column="pro_id"        />
+        <result property="productModel"        column="pro_model"        />
+        <result property="productName"        column="pro_name"        />
+        <result property="productType"        column="pro_type"        />
+        <result property="productUrl"        column="pro_images"        />
+        <result property="productSeriesId"        column="productseries_id"        />
+        <result property="productStyleId"        column="productstyle_id"        />
+        <result property="productSizeId"        column="productsize_id"        />
+        <result property="productMaterials"        column="pro_materials"        />
+        <result property="productArea"        column="pro_area"        />
+        <result property="productPrice"        column="pro_price"        />
+        <result property="productNum"        column="pro_num"        />
+        <result property="productTotalPrice"        column="pro_totalprice"        />
+        <result property="productStatus"        column="pro_status"        />
+        <result property="productRemark"        column="pro_remark"        />
+    </resultMap>
+    <sql id="selectTotal">
+
+                 select *
+                from t_item item join t_client cli on item.c_id=cli.c_id
+                join t_staff sta on item.s_id=sta.s_id join p_goods go on item.pro_id=go.pro_id
+
+    </sql>
+
+    <select id="selectAll" resultMap="IndentResult">
+
+                select item.i_id,item.i_num,item.i_title,cli.c_company,item.i_total,sta.s_name,item.i_start
+                from t_item item join t_client cli on item.c_id=cli.c_id
+                join t_staff sta on item.s_id=sta.s_id join p_goods go on item.pro_id=go.pro_id
+
+    </select>
+
+    <select id="selectByNum"  resultMap="IndentResult">
+        <include refid="selectTotal"/>
+        where item.i_id=#{pid}
+    </select>
+
+    <select id="select" resultMap="IndentResult">
+        <include refid="selectTotal"/>
+    </select>
+
+<!--    添加客户表-->
+
+
+
+
+
+
+
+</mapper>

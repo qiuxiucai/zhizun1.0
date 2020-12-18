@@ -2,9 +2,6 @@ package com.ruoyi.project.system.dept.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.ruoyi.project.staff.message.domain.Dep;
-import com.ruoyi.project.staff.message.domain.Staff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -293,13 +290,4 @@ public class DeptServiceImpl implements IDeptService
         }
         return UserConstants.DEPT_NAME_UNIQUE;
     }
-
-    @Override
-    public Dep selectByName(String depName) {
-
-
-        return deptMapper.selectByName(depName);
-    }
-
-
 }

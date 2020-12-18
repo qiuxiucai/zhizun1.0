@@ -1,6 +1,5 @@
 package com.ruoyi.project.task.taskbuild.service;
 
-import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.project.task.taskbuild.domain.Level;
 import com.ruoyi.project.task.taskbuild.domain.Task;
 
@@ -15,10 +14,4 @@ public interface ITaskBuildService {
 
 
   int deleteTaskByIds(Integer[] ids);
-
-    AjaxResult addTask(Task task);
-
-    Task selectTaskListById(int tId);
-
-    AjaxResult updateTask(Task task);
 }

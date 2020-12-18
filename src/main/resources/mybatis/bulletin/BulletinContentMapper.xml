@@ -16,6 +16,7 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
+
     <resultMap type="com.ruoyi.project.bulletin.content.domain.VO.BulletinContentVO" id="BulletinContentVOResult">
         <result property="contentId" column="content_id"/>
         <result property="typeId" column="type_id"/>
@@ -72,8 +73,8 @@
             <if test="contentTitle != null and contentTitle != ''">#{contentTitle},</if>
             <if test="contentText != null and contentText != ''">#{contentText},</if>
             <if test="createBy != null and createBy != ''">#{createBy},</if>
-        <if test="remark != null and remark != ''">#{remark},</if>
-        sysdate()
+            <if test="remark != null and remark != ''">#{remark},</if>
+            sysdate()
             )
     </insert>
 

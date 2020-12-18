@@ -117,6 +117,7 @@ public class PostServiceImpl implements IPostService
     public int insertPost(Post post)
     {
         post.setCreateBy(ShiroUtils.getLoginName());
+
         return postMapper.insertPost(post);
     }
 
