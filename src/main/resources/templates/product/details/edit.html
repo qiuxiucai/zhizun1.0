@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('修改产品')" />
+</head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-post-add" th:object="${goods}">
+			<input id="productId" name="productId" type="hidden" th:field="*{productId}"/>
+			<div class="form-group">
+				<label class="col-sm-3 control-label ">型号：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" name="productModel" id="productModel" th:field="*{productModel}" required>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">品名：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" name="productName" id="productName" th:field="*{productName}" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">类别：</label>
+				<div class="col-sm-8">
+					<select class="form-control" type="text" name="productType">
+						<option style="display: none">请选择产品类别</option>
+						<option value="饰品" th:selected="(*{productType} eq '饰品'? true:false)">饰品</option>
+						<option value="家具" th:selected="(*{productType} eq '家具' ? true:false)">家具</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">系列：</label>
+				<div class="col-sm-8">
+					<select class="form-control" type="text" name="productSeriesId"  th:with="seriess=${@seriestype.selectSeriesAll()}">
+						<option style="display: none">请选择产品系列</option>
+						<option th:each="series : ${seriess}" th:text="${series.seriesName}" th:value="${series.seriesId}" th:selected="(*{seriesName}==${series.getSeriesName()}? true:false)"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">风格：</label>
+				<div class="col-sm-8">
+					<select class="form-control" type="text" name="productStyleId" th:with="styles=${@styletype.selectProductStyleAll()}">
+						<option style="display: none">请选择产品风格</option>
+						<option th:each="style: ${styles}" th:text="${style.styleName}" th:value="${style.styleId}" th:selected="(*{styleName}==${style.getStyleName()}? true:false)"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">规格：</label>
+				<div class="col-sm-8">
+					<select  class="form-control" type="text" name="productSizeId" th:with="sizes=${@sizetype.selectProductSizeAll()}">
+						<option style="display: none">请选择产品规格</option>
+						<option th:each="size:${sizes}" th:text="${size.sizeName}" th:value="${size.sizeId}" th:selected="(*{sizeName}==${size.getSizeName()} ? true:false)" ></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">材质：</label>
+				<div class="col-sm-8">
+<!--					<select class="form-control" type="text"  name="productSizeId" th:with="goods=${@goods.selectMaterialsAll()}">-->
+<!--						<option value="">所有</option>-->
+<!--						<option th:each="good:${goods}" th:text="${good}" th:value="${good}"></option>-->
+<!--					</select>-->
+					<select class="form-control" type="text"  name="productMaterials" >
+						<option style="display: none">请选择产品材质</option>
+						<option value="面料" th:selected="(*{productMaterials} eq '面料'? true:false)" >面料</option>
+						<option value="五金件" th:selected="(*{productMaterials} eq '五金件'? true:false)" >五金件</option>
+						<option value="木饰面" th:selected="(*{productMaterials} eq '木饰面'? true:false)">木饰面</option>
+						<option value="油漆" th:selected="(*{productMaterials} eq '油漆'? true:false)">油漆</option>
+						<option value="其它" th:selected="(*{productMaterials} eq '其它'? true:false)">其它</option>
+
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">产地：</label>
+				<div class="col-sm-8">
+<!--					th:field="*{productArea}"-->
+
+					<input class="form-control" type="text" name="productArea" id="productArea"  th:field="*{productArea}" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">单价：</label>
+				<div class="col-sm-8">
+<!--					th:field="*{productPrice}"-->
+					<input class="form-control" type="text" name="productPrice" id="productPrice" th:field="*{productPrice}" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">数量：</label>
+				<div class="col-sm-8">
+<!--					th:field="*{productNum}"-->
+					<input class="form-control" type="text" name="productNum" id="productNum" th:field="*{productNum}" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">金额：</label>
+				<div class="col-sm-8">
+<!--					th:field="*{productTotalPrice}-->
+					<input class="form-control" type="text" name="productTotalPrice" id="productTotalPrice" th:field="*{productTotalPrice}" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">进口家具在途：</label>
+				<div class="col-sm-8">
+<!--					th:field="*{productStatus}-->
+					<input class="form-control" type="text" name="productStatus" id="productStatus" th:field="*{productStatus}" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+<!--					th:field="*{productRemark}-->
+					<input class="form-control" type="text" name="productRemark" id="productRemark" th:field="*{productRemark}"  required>
+				</div>
+			</div>
+		</form>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script type="text/javascript">
+		var prefix = ctx + "product/details";
+	    
+		$("#form-post-add").validate({
+			onkeyup: false,
+			rules:{
+				productModel:{
+					remote: {
+		                url: ctx + "product/details/checkProductModelNameUnique",
+		                type: "post",
+		                dataType: "json",
+		                data: {
+		                	"productModel" : function() {
+		                        return $.common.trim($("#productModel").val());
+		                    }
+		                },
+		                dataFilter: function(data, type) {
+		                	return $.validate.unique(data);
+		                }
+		            }
+				},
+				productName:{
+					remote: {
+						url: ctx + "product/details/checkProductNameUnique",
+						type: "post",
+						dataType: "json",
+						data: {
+							"productName" : function() {
+								return $.common.trim($("#productName").val());
+							}
+						},
+						dataFilter: function(data, type) {
+							return $.validate.unique(data);
+						}
+					}
+				},
+			},
+			messages: {
+		        "productName": {
+		            remote: "产品名称已经存在"
+		        },
+				"productModel": {
+					remote: "产品型号已经存在"
+				}
+		    },
+		    focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	        	$.operate.save(prefix + "/edit", $('#form-post-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

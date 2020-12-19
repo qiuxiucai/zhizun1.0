@@ -178,29 +178,59 @@
         where dep_id = #{depId}
     </select>
 
-    <select id="selectDepById" resultMap="depResult">
+    <select id="selectAll" resultMap="staffResult">
+        <include refid="selectStaffResult"/>
+        where j_id = 1
+    </select>
 
+    <select id="getDepsById" resultMap="depResult">
         <include refid="selectDepResult">
-
-
         </include>
-
        where dept_id = #{depId}
     </select>
 
+    <select id="selectByName" resultMap="depResult">
+        <include refid="selectDepResult">
+        </include>
+        where dep_name = #{depName}
+    </select>
 
     <select id="selectNameList" resultMap="staffResult">
        <include refid="selectStaffResult"></include>
-
-
     </select>
 
     <select id="selectStaffByName" resultMap="depResult">
-
     <include refid="selectDepResult"></include>
     where dep_name= #{depName}
-
-
     </select>
 
+    <resultMap id="staffDetailResult" type="com.ruoyi.project.staff.message.domain.StaffDetail">
+        <id property="dId" column="d_id"/>
+        <result property="sName" column="s_name"/>
+        <result property="dPlace" column="d_place"/>
+        <result property="sPhone" column="s_phone"/>
+        <result property="sJobNum" column="s_job_num"/>
+        <result property="dAvatar" column="d_avatar"/>
+        <result property="dAddress" column="d_address"/>
+        <result property="dEmail" column="d_email"/>
+        <result property="dFace" column="d_face"/>
+        <result property="dYear" column="d_year"/>
+        <result property="dMajor" column="d_major"/>
+        <result property="dEdu" column="d_edu"/>
+        <result property="dBirth" column="d_birth"/>
+        <result property="dSex" column="d_sex"/>
+    </resultMap>
+
+    <select id="selectStaffDetailByJobNum" resultMap="staffDetailResult">
+        select * from t_staff_detail t1 join t_staff t2 on
+        t1.s_job_num = t2.s_job_num
+        where t1.s_job_num = #{sJobNum}
+    </select>
+
+    <delete id="removeStaff" parameterType="Long">
+        delete from t_staff where s_job_num in
+            <foreach collection="array" item="jobNum" open="(" separator="," close=")">
+                #{jobNum}
+            </foreach>
+    </delete>
 </mapper>

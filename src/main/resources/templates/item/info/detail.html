@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <th:block th:include="include :: header('项目详情')"/>
 </head>
@@ -40,7 +40,7 @@
                                 <td>[[*{pTitle}]]</td>
                                 <td>[[*{pNum}]]</td>
                                 <td>[[*{sName}]]</td>
-                                <td>[[*{pTotal}]]</td>
+                                <td>[[*{pTotal}]]元</td>
                                 <td>[[*{pPeriod}]]</td>
                                 <td>[[*{dName}]]</td>
                             </tr>
@@ -78,7 +78,7 @@
                             <tr>
                                 <td>[[*{cId}]]</td>
                                 <td>[[*{cName}]]</td>
-                                <td>[[*{cType}]]</td>
+                                <td>[[*{TypeName}]]</td>
                                 <td>[[*{cCompany}]]</td>
                                 <td>[[*{cPhone}]]</td>
                                 <td>[[*{cRemark}]]</td>
@@ -118,8 +118,8 @@
                                 <td>[[*{pText}]]</td>
                                 <td>[[*{pStyle}]]</td>
                                 <td>[[*{pTypeName}]]</td>
-                                <td>[[*{pStart}]]</td>
-                                <td>[[*{pEnd}]]</td>
+                                <td th:text="${#dates.format(itemVO.pStart,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td th:text="${#dates.format(itemVO.pEnd,'yyyy-MM-dd HH:mm:ss')}"></td>
                                 <td>[[*{pRemark}]]</td>
                             </tr>
                             </tbody>
@@ -156,9 +156,9 @@
                             <tr>
                                 <td>[[*{productModel}]]</td>
                                 <td>[[*{productName}]]</td>
-                                <td>[[*{productNum}]]</td>
-                                <td>[[*{productPrice}]]</td>
-                                <td>[[*{productNum}]]</td>
+                                <td>[[*{dAmount}]]个</td>
+                                <td>[[*{productPrice}]]元</td>
+                                <td>[[*{dAmount * productPrice}]]元</td>
                                 <td>[[*{productRemark}]]</td>
                             </tr>
                             </tbody>
@@ -169,5 +169,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>

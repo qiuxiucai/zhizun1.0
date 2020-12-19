@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.product.style.mapper.ProductStyleMapper">
+
+    <resultMap type="com.ruoyi.project.product.style.domain.ProductStyle" id="StyleResult">
+        <result property="styleId"    column="productstyle_id"    />
+        <result property="styleName"    column="style_name"    />
+        <result property="createBy"       column="create_by"       />
+        <result property="createTime"     column="create_time"     />
+        <result property="updateBy"       column="update_by"       />
+        <result property="updateTime"     column="update_time"     />
+        <result property="styleRemark"         column="style_remark"          />
+    </resultMap>
+
+    <sql id="selectStyleAll">
+        select *
+        from p_style
+    </sql>
+
+    <select id="selectProductStyleAll" resultMap="StyleResult">
+        <include refid="selectStyleAll"/>
+    </select>
+
+    <select id="selectProductStyle" resultMap="StyleResult">
+        <include refid="selectStyleAll"/>
+        <if test="styleName !=null and styleName != ''">
+            where style_name like concat('%',#{styleName},'%')
+        </if>
+
+    </select>
+
+    <insert id="saveProductStyle">
+
+        insert into p_style(
+        <if test="styleName != null and styleName != ''">style_name,</if>
+        <if test="styleRemark != null and styleRemark != ''">style_remark,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )values(
+        <if test="styleName != null and styleName != ''">#{styleName},</if>
+        <if test="styleRemark != null and styleRemark != ''">#{styleRemark},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+
+    </insert>
+
+    <select id="selectProductStyleNameUnique" resultMap="StyleResult">
+        <include refid="selectStyleAll"/>
+        where style_name = #{styleName}
+    </select>
+
+    <select id="selectProductStyleById" resultMap="StyleResult">
+            <include refid="selectStyleAll"/>
+            where productstyle_id = #{styleId}
+    </select>
+
+    <update id="updateProductStyle">
+
+
+        update p_style
+        <set>
+
+            <if test="styleName != null and styleName != ''">style_name = #{styleName},</if>
+
+            <if test="styleRemark != null  and styleRemark != ''">style_remark = #{styleRemark},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where productstyle_id = #{styleId}
+    </update>
+
+    <delete id="removeStyleByIds">
+        delete from p_style where productstyle_id in
+        <foreach collection="array" item="styleId" open="(" separator="," close=")">
+            #{styleId}
+        </foreach>
+    </delete>
+</mapper>

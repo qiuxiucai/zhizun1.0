@@ -23,7 +23,6 @@ public interface SeriesMapper {
 
     int removeSeriesByIds(Long[] ids);
 
-
-
+//    String  selectMaterialsAll();
 }
 

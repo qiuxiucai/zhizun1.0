@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('新增产品规格')" />
+</head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-post-add">
+			<div class="form-group">
+				<label class="col-sm-3 control-label ">规格名称：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" name="sizeName" id="sizeName" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">规格备注：</label>
+				<div class="col-sm-8">
+					<textarea id="sizeRemark" name="sizeRemark" class="form-control"></textarea>
+				</div>
+			</div>
+		</form>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script type="text/javascript">
+		var prefix = ctx + "product/size";
+	    
+		$("#form-post-add").validate({
+			onkeyup: false,
+			rules:{
+				sizeName:{
+					remote: {
+		                url: ctx + "product/size/checkProductSizeNameUnique",
+		                type: "post",
+		                dataType: "json",
+		                data: {
+		                	"sizeName" : function() {
+		                        return $.common.trim($("#sizeName").val());
+		                    }
+		                },
+		                dataFilter: function(data, type) {
+		                	return $.validate.unique(data);
+		                }
+		            }
+				},
+			},
+			messages: {
+		        "sizeName": {
+		            remote: "产品规格已经存在"
+		        }
+		    },
+		    focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	        	$.operate.save(prefix + "/add", $('#form-post-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

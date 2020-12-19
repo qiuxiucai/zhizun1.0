@@ -1,12 +1,8 @@
 package com.ruoyi.project.system.dept.mapper;
 
 import java.util.List;
-
-import com.ruoyi.project.staff.message.domain.Dep;
-import com.ruoyi.project.staff.message.domain.Staff;
 import org.apache.ibatis.annotations.Param;
 import com.ruoyi.project.system.dept.domain.Dept;
-import org.apache.ibatis.annotations.Select;
 
 /**
  * 部门管理 数据层
@@ -110,7 +106,4 @@ public interface DeptMapper
      * @return 部门列表
      */
     public List<Dept> selectChildrenDeptById(Long deptId);
-
-
-    Dep selectByName(@Param("depName") String depName);
 }

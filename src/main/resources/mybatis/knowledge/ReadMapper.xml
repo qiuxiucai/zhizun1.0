@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.knowLedge.mapper.ReadMapper">
+    
+    <resultMap type="com.ruoyi.project.knowLedge.domain.Read" id="ReadResult">
+        <id property="kId"     column="k_id"       />
+<!--        <result property="typeId"        column="type_id"     />-->
+        <result property="kName"  column="k_name"     />
+        <result property="kContent"   column="k_content"     />
+        <result property="kType"      column="k_type"     />
+        <result property="kUrl"    column="k_url"   />
+        <result property="kBenchmarking"      column="k_benchmarking"     />
+    </resultMap>
+
+
+
+    <select id="selectList" parameterType="com.ruoyi.project.knowLedge.domain.Read" resultMap="ReadResult">
+        select k_id,k_name,k_content,k_type,k_url,k_benchmarking from t_product
+
+            <if test="kName!=null and kName!=''"> where k_content like concat('%',#{kContent},'%')</if>
+
+
+    </select>
+
+    <insert id="insertRead">
+        insert into t_product(
+        <if test="kName != null and kName != ''">k_name,</if>
+        <if test="kContent != null and kContent != ''">k_content,</if>
+        <if test="kType != null ">k_type,</if>
+        <if test="kBenchmarking != null ">k_benchmarking</if>
+        )values(
+        <if test="kName != null and kName != ''">#{kName},</if>
+        <if test="kContent != null and kContent != ''">#{kContent},</if>
+        <if test="kType != null ">#{kType},</if>
+        <if test="kBenchmarking != null ">#{kBenchmarking}</if>
+        )
+    </insert>
+
+    <select id="selectById" resultMap="ReadResult">
+     select k_id,k_name,k_content,k_type,k_url,k_benchmarking from t_product where k_id=#{kId}
+    </select>
+
+    <update id="editByRead" parameterType="com.ruoyi.project.knowLedge.domain.Read">
+        update t_product
+        <set>
+            <if test="kName != null and kName != ''">k_name = #{kName},</if>
+            <if test="kContent != null and kContent != ''">k_content = #{kContent},</if>
+            <if test="kType != null">k_type = #{kType},</if>
+            <if test="kBenchmarking != null ">k_benchmarking = #{kBenchmarking}</if>
+        </set>
+        where k_id = #{kId}
+    </update>
+
+    <delete id="removeById">
+        delete from t_product where k_id in
+        <foreach collection="array" item="kId" open="(" separator="," close=")">
+            #{kId}
+        </foreach>
+
+
+    </delete>
+
+    <select id="selectSoft" resultMap="ReadResult">
+     select k_id,k_name,k_content,k_type,k_url,k_benchmarking from t_product where k_type=0
+    </select>
+
+    <select id="selectHard" resultMap="ReadResult">
+      select k_id,k_name,k_content,k_type,k_url,k_benchmarking from t_product where k_type=1
+
+    </select>
+
+    <select id="selectSign" resultMap="ReadResult">
+     select k_id,k_name,k_content,k_type,k_url,k_benchmarking from t_product where k_benchmarking=1
+
+    </select>
+</mapper>

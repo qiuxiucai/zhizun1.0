@@ -2,8 +2,6 @@ package com.ruoyi.project.system.dept.service;
 
 import java.util.List;
 import com.ruoyi.framework.web.domain.Ztree;
-import com.ruoyi.project.staff.message.domain.Dep;
-import com.ruoyi.project.staff.message.domain.Staff;
 import com.ruoyi.project.system.dept.domain.Dept;
 import com.ruoyi.project.system.role.domain.Role;
 
@@ -93,6 +91,4 @@ public interface IDeptService
      * @return 结果
      */
     public String checkDeptNameUnique(Dept dept);
-
-    Dep selectByName(String depName);
 }

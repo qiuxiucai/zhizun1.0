@@ -108,6 +108,7 @@ public class ExcelUtil<T>
     public ExcelUtil(Class<T> clazz)
     {
         this.clazz = clazz;
+        System.out.println(clazz.getName());
     }
 
     public void init(List<T> list, String sheetName, Type type)
@@ -131,6 +132,7 @@ public class ExcelUtil<T>
      */
     public List<T> importExcel(InputStream is) throws Exception
     {
+
         return importExcel(StringUtils.EMPTY, is);
     }
 
@@ -164,7 +166,6 @@ public class ExcelUtil<T>
         }
 
         int rows = sheet.getPhysicalNumberOfRows();
-
         if (rows > 0)
         {
             // 定义一个map用于存放excel列的序号和field.
@@ -186,6 +187,10 @@ public class ExcelUtil<T>
             }
             // 有数据时才处理 得到类的所有field.
             Field[] allFields = clazz.getDeclaredFields();
+            for (Field allField : allFields) {
+                System.out.println(allField);
+
+            }
             // 定义一个map用于存放列的序号和field.
             Map<Integer, Field> fieldsMap = new HashMap<Integer, Field>();
             for (int col = 0; col < allFields.length; col++)
@@ -381,7 +386,7 @@ public class ExcelUtil<T>
 
     /**
      * 填充excel数据
-     * 
+     *
      * @param index 序号
      * @param row 单元格行
      */
@@ -391,6 +396,7 @@ public class ExcelUtil<T>
         int endNo = Math.min(startNo + sheetSize, list.size());
         for (int i = startNo; i < endNo; i++)
         {
+            System.out.println(fields.toString());
             row = sheet.createRow(i + 1 - startNo);
             // 得到导出对象.
             T vo = (T) list.get(i);

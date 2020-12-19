@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('修改岗位')"/>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-post-edit">
+        <div class="wrapper wrapper-content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped" th:object="${ItemAllVO}">
+                                    <!--                            项目信息-->
+                                    <h4>订单详细</h4>
+                                    <thead>
+                                    <tr>
+                                        <th>
+
+                                            项目名称
+                                        </th>
+                                        <th>
+                                            项目负责人
+                                        </th>
+                                        <th>
+                                            项目总金额
+                                        </th>
+                                        <th>
+                                            项目周期
+                                        </th>
+                                        <th>
+                                            订单类别
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <!--                                      项目名称  -->
+                                        <td><input name="pTitle" type="text" class="form-control" th:value="*{pTitle}">
+                                            <input name="pId" type="hidden" th:value="*{pId}">
+                                            <input name="cId" type="hidden" th:value="*{pCid}">
+                                        </td>
+                                        <!--                                        项目负责人 传sid 更换item表sid-->
+                                        <td><select name="pSid" th:with="types=${@staffService.selectAll()}"
+                                                    class="form-control">
+                                            <option th:each="type : ${types}" th:text="${type.sName}"
+                                                    th:value="${type.sId}"
+                                                    th:selected="(*{sName} == ${type.sName} ? true:false)"></option>
+                                        </select>
+                                        </td>
+                                        <!--                                        项目总金额-->
+                                        <td><input name="pTotal" type="text" class="form-control"  th:value="*{pTotal}"></td>
+                                        <!--                                        项目周期-->
+                                        <td><input name="pPeriod" type="text" class="form-control"  th:value="*{pPeriod}"></td>
+                                        <!--                                        订单类别-->
+                                        <td><select class="form-control" name="dType"
+                                                    th:with="types=${@indentType.selectIndentAll(null)}">
+                                            <option th:each="type : ${types}" th:text="${type.dName}"
+                                                    th:value="${type.dType}"
+                                                    th:selected="(*{dName} == ${type.dName} ? true:false)"></option>
+                                        </select>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <!--                            客户信息-->
+
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            客户信息
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            客户名称
+                                        </th>
+                                        <th>
+                                            客户类型
+                                        </th>
+                                        <th>
+                                            客户公司名称
+                                        </th>
+                                        <th>
+                                            联系方式
+                                        </th>
+                                        <th>
+                                            客户备注信息
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <!--                                        下拉框修改 实际提交pCid-->
+                                        <td>
+                                            <input type="text" name="cName" class="form-control"  th:value="*{cName}">
+                                        </td>
+                                        <!--                                       客户类型  下拉框修改 -->
+                                        <td>
+                                            <select name="TypeId"
+                                                    th:with="types=${@itemInfoServiceImpl.selectTypeAll()}"
+                                                    class="form-control">
+                                                <option th:each="type : ${types}" th:text="${type.TypeName}"
+                                                        th:value="${type.TypeId}"
+                                                        th:selected="(*{TypeName} == ${type.TypeName} ? true:false)"></option>
+                                            </select>
+                                        </td>
+                                        <!--                                        客户公司名称-->
+                                        <td><input type="text" name="cCompany" class="form-control"  th:value="*{cCompany}"></td>
+                                        <!--                                       联系方式-->
+                                        <td><input type="text" name="cPhone" class="form-control"  th:value="*{cPhone}"></td>
+                                        <!--                                        客户备注信息-->
+                                        <td><input type="text" name="cRemark" class="form-control"  th:value="*{cRemark}"></td>
+                                    </tr>
+                                    </tbody>
+
+                                    <!--                            项目详情-->
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            订单形象-项目详情
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            项目内容
+                                        </th>
+                                        <th>
+                                            项目风格
+                                        </th>
+                                        <th>
+                                            项目类型
+                                        </th>
+                                        <th>
+                                            项目订立时间
+                                        </th>
+                                        <th>
+                                            项目完成时间
+                                        </th>
+                                        <th>
+                                            备注
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <!--                                        项目内容-->
+                                        <td><input type="text" name="pText" class="form-control"  th:value="*{pText}"></td>
+                                        <!--                                        项目风格-->
+                                        <td><input type="text" name="pStyle" class="form-control"  th:value="*{pStyle}"></td>
+                                        <!--                                        项目类型名称-->
+                                        <td><input type="text" name="pTypeName" class="form-control"  th:value="*{pTypeName}"></td>
+                                        <!--                                        项目订立时间-->
+                                        <td><input type="datetime-local" name="DateStart" class="form-control"  th:value="*{pStart}"></td>
+                                        <!--                                       项目完成时间-->
+                                        <td><input type="datetime-local" name="DateEnd" class="form-control"  th:value="*{pEnd}"></td>
+                                        <!--                                        项目备注-->
+                                        <td><input type="text" name="pRemark" class="form-control"  th:value="*{pRemark}"></td>
+                                    </tr>
+                                    </tbody>
+
+                                    <!--                            产品信息-->
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            订单形象-项目详情
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            产品编号
+                                        </th>
+                                        <th>
+                                            产品订单数量
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <!--                                       产品编号下拉框修改-->
+                                        <td>
+                                            <select name="pProId"
+                                                    th:with="types=${@itemInfoServiceImpl.selectGoodsAll()}"
+                                                    class="form-control">
+                                                <option th:each="type : ${types}" th:text="${type.productName}"
+                                                        th:value="${type.productId}"
+                                                        th:selected="(*{productName} == ${type.productName} ? true:false)"></option>
+                                            </select>
+                                        </td>
+                                        <!--                                       订单产品数量 -->
+                                        <td><input type="text" name="dAmount" class="form-control"  th:value="*{dAmount}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<th:block th:include="include :: footer"/>
+<script type="text/javascript">
+    var prefix = ctx + "item/info";
+
+    function submitHandler() {
+        $.operate.save(prefix + "/edit", $('#form-post-edit').serialize());
+
+    }
+</script>
+</body>
+</html>
