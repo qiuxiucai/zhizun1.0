@@ -1,15 +1,11 @@
 package com.ruoyi.project.task.taskbuild.controller;
-
-
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
-
 import com.ruoyi.project.staff.message.domain.Dep;
 import com.ruoyi.project.staff.message.domain.Staff;
 import com.ruoyi.project.staff.message.service.IStaffService;
-
-import com.ruoyi.project.system.dept.service.IDeptService;
 import com.ruoyi.project.task.taskbuild.domain.Task;
 import com.ruoyi.project.task.taskbuild.service.ITaskBuildService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -17,13 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 @Controller
 @RequestMapping("/task/build")
 
@@ -118,7 +111,9 @@ public class TaskBuildController extends BaseController {
         tEndTime=s3+" "+s4;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");//转换时区格式
         Date tStartTimes=sdf.parse(tStartTime);
+        System.out.println("tStartTimes = " + tStartTimes);
         Date tEndTimes=sdf.parse(tEndTime);
+        System.out.println("tEndTimes = " + tEndTimes);
         String depName=dep.getDeptName();
         Task task1 = new Task();
         task1.setTId(null);
@@ -177,9 +172,12 @@ public class TaskBuildController extends BaseController {
       }
 
 
-
-
-
-
-
+    @ResponseBody
+    @PostMapping("/export")
+    @RequiresPermissions("task:build:export")
+    public AjaxResult export(Task task){
+        List<Task> tasks = iTaskBuildService.selectTaskList(task);
+        ExcelUtil<Task> TaskExcelUtils=new ExcelUtil<>(Task.class);
+        return TaskExcelUtils.exportExcel(tasks,"tasks");
+    }
 }

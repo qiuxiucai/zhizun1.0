@@ -487,4 +487,9 @@ public class UserServiceImpl implements IUserService
     {
         return userMapper.updateUser(user);
     }
+
+    @Override
+    public User selectDeptIdByUserName(String userName) {
+        return userMapper.selectDeptIdByUserName(userName);
+    }
 }

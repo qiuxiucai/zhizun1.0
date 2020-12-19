@@ -21,9 +21,17 @@ public class ITaskBuildServiceImpl implements ITaskBuildService{
         return TaskBuildMapper.selectTaskList(task);
     }
 
+
+
+
     @Override
     public List<Level> selectLevel() {
         return TaskBuildMapper.selectLevel() ;
+    }
+
+    @Override
+    public List<Task> slectTaskText() {
+        return TaskBuildMapper.selectTaskText();
     }
 
     @Override
@@ -56,5 +64,15 @@ public class ITaskBuildServiceImpl implements ITaskBuildService{
         } else {
             return AjaxResult.error("修改失败");
         }
+    }
+
+    @Override
+    public List<Task> selectByIds(Integer[] ids) {
+        return TaskBuildMapper.selectByIds(ids);
+    }
+
+    @Override
+    public List<Task> slectByDate(String startTime, String endTime) {
+        return TaskBuildMapper.selectByDate(startTime,endTime);
     }
 }

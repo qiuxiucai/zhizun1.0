@@ -88,6 +88,36 @@ delete from t_task where t_id in
      where t_id=#{tId}
  </update>
 
+<select id="selectTaskText" resultMap="task">
+
+    <include refid="selectTask"></include>
+    
+</select>
 
 
+    <select id="selectByIds" resultMap="task">
+        <include refid="selectTask"></include>
+        where t_id in
+
+        <foreach  item="ids" collection="array"  open="(" separator="," close=")">
+
+            #{ids}
+
+        </foreach>
+
+
+    </select>
+
+
+    <select id="selectByDate" resultMap="task">
+        <include refid="selectTask"></include>
+        <where>
+
+            t_start  between  #{starttime} and #{endtime}
+
+
+        </where>
+
+
+    </select>
 </mapper>

@@ -61,7 +61,7 @@
             <label class="col-sm-3 control-label">紧急程度：</label>
             <div class="col-sm-8">
                 <select  class="form-control"  name="tStatus" th:with="types=${@task.selectLevel()}">
-                    <option th:each="type : ${types}" th:text="${type.getLType()}" th:value="${type.getLStatusid()}" th:selected="(*{tStatus} == ${type.getLId()} ? true:false)"></option>
+                    <option th:each="type : ${types}" th:text="${type.getLType()}" th:value="${type.getLStatusid()}" th:selected="(*{tStatus}==${type.getLStatusid()}? true:false)"></option>
                 </select>
             </div>
         </div>
@@ -83,32 +83,13 @@
 
     </form>
 </div>
-
 <script>
-
-
-
-
 </script>
 <th:block th:include="include :: footer" />
 <script>
     var prefix = ctx + "task/build/depList";
     var prefix1 = ctx+  "task/build/sNameList";
     var prfix2=ctx+"task/build/findSname"
-
-   /* $(function(){
-
-        $.get(prefix, function(data) {
-            console.log(data.length)
-            for (var i = 0; i < data.length; i++) {
-                $("#dep").append(
-                    "<option id='o1'value='"+ data[i].deptId+"'>"
-                    + data[i].deptName + "</option>")
-            }
-
-        }, "json")
-    })*/
-
     $("#dep").change(function () {
         $("#sName").empty();
         $("#sName").append("<option > 请选择 </option>");

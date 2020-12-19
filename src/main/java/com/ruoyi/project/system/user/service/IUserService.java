@@ -178,4 +178,6 @@ public interface IUserService
      * @return 结果
      */
     public int changeStatus(User user);
+
+    User selectDeptIdByUserName(String userName);
 }

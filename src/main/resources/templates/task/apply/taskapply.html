@@ -11,14 +11,24 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            任务标题：<input type="text" name="tText"/>
+                            申请人：<input type="text" name="uName"/>
                         </li>
 
                         <li>
-                            任务类型：<select name="tStatus" th:with="task=${@task.selectLevel()}">
+                            部门： <select name="uDep"  id="dep" th:with="deps=${@staffService.getDeps()}">
                             <option value="">所有</option>
-                            <option th:each="type : ${task}" th:text="${type.getLType()}" th:value="${type.getLStatusid()}"></option>
+                            <option th:each="dep:${deps}" th:text="${dep.getDeptName()}" th:value="${dep.getDeptName()}" ></option>
                         </select>
+                        </select>
+                        </li>
+                        <li>
+                            审核情况： <select name="eStatus"  id="eStatus" >
+                            <option vlaue=""></option>
+                            <option value="1">同意</option>
+                            <option value="2">不同意</option>
+                            <option value="0">审核中</option>
+                        </select>
+                            </select>
                         </li>
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>搜索</a>
@@ -33,15 +43,13 @@
             <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="bulletin:content:add">
                 <i class="fa fa-plus"></i> 新增
             </a>
-            <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="bulletin:content:edit">
-                <i class="fa fa-edit"></i> 修改
+            <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="task:apply:edit">
+                <i class="fa fa-edit"></i> 审批
             </a>
             <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="bulletin:content:remove">
                 <i class="fa fa-remove"></i> 删除
             </a>
-            <a class="btn btn-warning" onclick="$.table.exportExcel()">
-                <i class="fa fa-download"></i> 导出
-            </a>
+
 
         </div>
 
@@ -53,10 +61,10 @@
 </div>
 <th:block th:include="include :: footer" />
 <script th:inline="javascript">
-    var editFlag = [[${@permission.hasPermi('system:post:edit')}]];
-    var removeFlag = [[${@permission.hasPermi('system:post:remove')}]];
+    var editFlag = [[${@permission.hasPermi('task:apply:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('task:apply:remove')}]];
     var datas = [[${@dict.getType('sys_normal_disable')}]];
-    var prefix = ctx + "task/build";
+    var prefix = ctx + "task/apply";
 
     $(function() {
         var options = {
@@ -64,97 +72,73 @@
             createUrl: prefix + "/add",
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
-            exportUrl: prefix + "/export",
-           /* sortName: "postSort",
-            modalName: "岗位",*/
+
+            /* sortName: "postSort",
+             modalName: "岗位",*/
             columns: [{
                 checkbox: true
             },
                 {
-                    field: 'tid',
-                    title: '任务编号'
+                    field: 'eid',
+                    title: '申请编号'
                 },
                 {
-                    field: 'ttitle',
-                    title: '任务标题',
+                    field: 'uname',
+                    title: '申请人',
                     sortable: true
                 },
+                {
+                    field: 'udep',
+                    title: '部门',
+                    sortable: true
+                },
+
                 {
                     field: 'ttext',
-                    title: '任务内容',
+                    title: '申请任务',
                     sortable: true
                 },
                 {
-                    field: 'tstart',
-                    title: '任务开始时间',
+                    field: 'estarttime',
+                    title: '延迟到时间',
                     sortable: true
                 },
                 {
-                    field: 'tend',
-                    title: '任务结束时间',
+                    field: 'ereason',
+                    title: '申请原因',
                     sortable: true
                 },
+
                 {
-                    field: 'tcomplete',
-                    title: '完成情况',
-                    sortable: true,
-                    formatter: function(value, row, index) {
-                        return value==1? "完成":"未完成";
-                    }
-                },
-                {
-                    field: 'tstatus',
-                    title: '任务紧急程度',
+                    field: 'estatus',
+                    title: '审批情况',
                     sortable: true,
                     formatter: function(value, row, index) {
 
                         console.log("value:"+value)
                         if(value==0){
 
-                            return "普通任务";
+                            return "审核中";
                         }
                         else if(value==1){
 
-                           return "紧急任务";
+                            return "同意";
                         }else{
 
-                           return "非常紧急";
+                            return "不同意";
                         }
                     }
+                }, {
+                    field: 'einfo',
+                    title: '审批详情',
+                    sortable: true,
+
                 },
 
-               ]
+            ]
         };
         $.table.init(options);
     });
 </script>
-<script>
-    function exportExcelVO(formId) {
-        console.log(formId)
-        $.modal.confirm("确定导出" + table.options.modalName + "详情吗？", function () {
-            var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId; //
-            $.modal.loading("正在导出数据，请稍后...");
-            $.post(table.options.exportUrl ,{"pid":formId}, function (result) {
-                console.log("开始下载")
-                if (result.code == web_status.SUCCESS) {
-                    console.log("开始下载")
-                    window.location.href = ctx + "common/download?fileName=" + encodeURI(result.msg) + "&delete=" + true;
-                } else if (result.code == web_status.WARNING) {
-                    $.modal.alertWarning(result.msg)
-                } else {
-                    $.modal.alertError(result.msg);
-                }
-                $.modal.closeLoading();
-            });
-        });
-    }
-
-
-
-
-
-</script>
 </body>
-
-
 </html>

@@ -9,11 +9,11 @@ import java.util.List;
 public interface ITaskBuildService {
 
 
-  public   List<Task> selectTaskList(Task task);
+  List<Task> selectTaskList(Task task);
 
-  public  List<Level> selectLevel();
+   List<Level> selectLevel();
 
-
+    List<Task> slectTaskText();
   int deleteTaskByIds(Integer[] ids);
 
     AjaxResult addTask(Task task);
@@ -21,4 +21,8 @@ public interface ITaskBuildService {
     Task selectTaskListById(int tId);
 
     AjaxResult updateTask(Task task);
+
+    List<Task> selectByIds(Integer[] ids);
+
+    List<Task> slectByDate(String format, String format1);
 }

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.task.apply.mapper.ApplyMapper">
+
+    <resultMap type="com.ruoyi.project.task.apply.domain.Apply" id="apply">
+        <result property="eId" column="e_id"/>
+        <result property="tId" column="t_id"/>
+        <result property="eStarttime" column="e_starttime"/>
+        <result property="eReason" column="e_reason"/>
+        <result property="eStatus" column="e_status"/>
+        <result property="uName" column="u_name"/>
+        <result property="eHandletime" column="e_handletime"/>
+        <result property="eInfo" column="e_info"/>
+        <result property="uDep" column="u_dep"/>
+        <result property="eEndtime" column="e_endtime"/>
+
+    </resultMap>
+
+    <resultMap type="com.ruoyi.project.task.apply.domain.VO.ApplyVO" id="applyVo">
+        <result property="eId" column="e_id"/>
+        <result property="tId" column="t_id"/>
+        <result property="eStarttime" column="e_starttime"/>
+        <result property="eReason" column="e_reason"/>
+        <result property="eStatus" column="e_status"/>
+        <result property="uName" column="u_name"/>
+        <result property="eHandletime" column="e_handletime"/>
+        <result property="eInfo" column="e_info"/>
+        <result property="uDep" column="u_dep"/>
+        <result property="tText" column="t_text"/>
+        <result property="eEndtime" column="e_endtime"/>
+    </resultMap>
+
+
+    <sql id="selectApply">
+        select t_task.t_text,t_errand.e_id,  t_errand.e_starttime, t_errand.e_reason,t_errand. e_status,t_errand. u_name, t_errand.e_handletime, t_errand.e_status,t_errand.e_info,t_errand.u_dep,t_errand.e_endtime
+        from t_errand join t_task on  t_errand.t_id=t_task.t_id
+    </sql>
+
+    <sql id="selectAll">
+        select e_id,t_id,e_starttime,e_reason,e_status,u_name,e_handletime,e_info,u_dep,e_endtime
+        from t_errand
+
+
+
+    </sql>
+
+
+
+    <select id="selectApplyList" parameterType="Apply" resultMap="applyVo">
+        <include refid="selectApply"></include>
+
+        <where>
+            <if test="uName != null and uName != ''">
+                AND u_name like concat('%', #{uName}, '%')
+            </if>
+            <if test="uDep != null and uDep != ''" >
+                AND u_dep like concat('%', #{uDep}, '%')
+            </if>
+
+            <if test="eStatus != null"  >
+                 AND e_Status like concat('%', #{eStatus}, '%')
+            </if>
+
+        </where>
+    </select>
+
+<!-- <delete id="deleteTaskByIds" >
+delete from t_task where t_id in
+     <foreach collection="array" open="(" close=")" item="ids" separator="," >
+         #{ids}
+     </foreach>
+ </delete>-->
+<insert id="addApply" parameterType="apply">
+    insert into t_errand(e_id,t_id,e_starttime,e_reason,e_endtime,e_status,u_name,e_handletime,e_info,u_dep)
+    values(#{eId},#{tId},#{eStarttime},#{eReason},#{eEndtime},#{eStatus},#{uName},#{eHandletime},#{eInfo},#{uDep})
+</insert>
+    <delete id="deleteByIds">
+
+
+        delete from t_errand where e_id in
+
+        <foreach collection="array" open="(" close=")" item="ids" separator="," >
+            #{ids}
+        </foreach>
+
+
+    </delete>
+
+  <select id="selectUdepById" resultMap="apply">
+      <include refid="selectAll"></include>
+
+      where e_id=#{eId}
+
+  </select>
+    <select id="selectById" resultMap="apply">
+        <include refid="selectAll"></include>
+        where e_id=#{eId}
+
+    </select>
+
+
+    <update id="updateById" parameterType="task">
+        update t_errand set t_id=#{tId},e_starttime=#{eStarttime},e_reason=#{eReason},e_endtime=#{eEndtime},
+        e_status=#{eStatus},u_name=#{uName},e_handletime=#{eHandletime},e_info=#{eInfo},u_dep=#{uDep}
+        where e_id=#{eId}
+
+
+    </update>
+</mapper>

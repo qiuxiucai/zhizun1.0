@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <link th:href="@{/css/laydate.css}" rel="stylesheet"/>
+    <script th:src="@{/js/laydate.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+
+
+</head>
+<body class="white-bg">
+
+<span id="testView"></span>
+<div id="test2"></div>
+
+<script>
+
+
+  var ins1=  laydate.render({
+        "elem": '#test2'
+        , "position": 'static',
+        format:'yyyy-MM-dd HH:mm:ss',
+        type:'datetime'
+        , "change": function(value, date,endDate){
+            console.log(date)
+          console.log(endDate)
+            console.log(value)
+
+            $.post(
+                "http://localhost/task/date/selectTask",{"date":value},function(data){
+                    console.log(data.length)
+                    var task=new Array()
+                    for(var i=0;i<data.length;i++){
+
+                        task[i]=data[i].ttext
+
+
+
+                    }
+
+
+                    ins1.hint(task);
+
+                }
+
+
+            )
+
+
+
+
+        }
+    });
+</script>
+
+</body>
+</html>
+
+
+
