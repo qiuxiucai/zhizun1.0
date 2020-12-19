@@ -138,7 +138,7 @@
         from t_job
     </select>
 
-    <select id="checkSJobNumUnique" resultType="Long">
+    <select id="checkSJobNumUnique" resultType="int">
         select count(0)
         from t_staff
         where s_job_num = #{sJobNum}

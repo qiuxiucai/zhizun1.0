@@ -7,8 +7,6 @@ import com.ruoyi.project.staff.message.domain.Staff;
 import com.ruoyi.project.staff.message.domain.StaffDetail;
 import com.ruoyi.project.staff.message.domain.vo.StaffVO;
 import com.ruoyi.project.staff.message.service.IStaffService;
-import com.ruoyi.project.system.post.domain.Post;
-import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
